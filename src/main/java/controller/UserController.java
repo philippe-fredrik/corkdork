@@ -8,6 +8,8 @@ import service.UserService;
 
 import java.util.Optional;
 
+@RestController
+@RequestMapping("users")
 public class UserController {
 
     UserService userService;
@@ -20,8 +22,6 @@ public class UserController {
     public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user){
         UserEntity createdUser = userService.createUser(user);
 
-
-
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
 
 
@@ -31,7 +31,6 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
 
     }
 

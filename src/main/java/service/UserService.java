@@ -10,20 +10,18 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public UserEntity createUser(UserEntity user) {
-        return userRepository.save(user);
+    public UserEntity createUser(UserEntity userEntity) {
+        return userRepository.save(userEntity);
     }
 
     public void deleteUser(Long id) {
-
         UserEntity foundUser = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-
         userRepository.deleteById(foundUser.getId());
     }
 
@@ -33,6 +31,6 @@ public class UserService {
 
     public Iterable<UserEntity> findAllUsers() {
         return userRepository.findAll();
-
     }
+
 }

@@ -1,7 +1,6 @@
 package entity;
 
 import com.sun.istack.NotNull;
-
 import javax.persistence.*;
 
 @Entity
@@ -17,8 +16,6 @@ public class UserEntity {
     private String lastName;
     @NotNull
     private String email;
-
-
 
     public Long getId() {
         return id;

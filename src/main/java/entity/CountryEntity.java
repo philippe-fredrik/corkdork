@@ -13,7 +13,6 @@ public class CountryEntity {
     @NotNull
     private String countryName;
 
-
     public Long getId() {
         return id;
     }

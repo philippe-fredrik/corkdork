@@ -8,14 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class ColorEntity {
+public class WineEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
-    private String color;
+    private String wineName;
 
     public Long getId() {
         return id;
@@ -25,11 +25,11 @@ public class ColorEntity {
         this.id = id;
     }
 
-    public String getColor() {
-        return color;
+    public String getWineName() {
+        return wineName;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setWineName(String wineName) {
+        this.wineName = wineName;
     }
 }

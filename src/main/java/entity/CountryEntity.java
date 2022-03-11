@@ -1,6 +1,7 @@
 package entity;
 
-import com.sun.istack.NotNull;
+import org.jetbrains.annotations.NotNull;
+
 import javax.persistence.*;
 
 @Entity

@@ -1,10 +1,10 @@
-package controller;
+package se.iths.corkdork.controller;
 
-import entity.ColorEntity;
+import se.iths.corkdork.entity.ColorEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.ColorService;
+import se.iths.corkdork.controller.service.ColorService;
 
 import java.util.Optional;
 

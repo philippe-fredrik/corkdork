@@ -1,10 +1,10 @@
-package controller;
+package se.iths.corkdork.controller;
 
-import entity.GrapeEntity;
+import se.iths.corkdork.entity.GrapeEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.GrapeService;
+import se.iths.corkdork.controller.service.GrapeService;
 
 import java.util.Optional;
 

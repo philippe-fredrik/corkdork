@@ -1,10 +1,10 @@
-package controller;
+package se.iths.corkdork.controller;
 
-import entity.WineEntity;
+import se.iths.corkdork.entity.WineEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.WineService;
+import se.iths.corkdork.controller.service.WineService;
 
 import java.util.Optional;
 
@@ -25,7 +25,7 @@ public class WineController {
         return new ResponseEntity<>(createdWine, HttpStatus.CREATED);
     }
 
-    @DeleteMapping({"id"})
+    @DeleteMapping({"{id}"})
     public ResponseEntity<Void> deleteWine(@PathVariable Long id){
         wineService.deleteWine(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -1,4 +1,4 @@
-package entity;
+package se.iths.corkdork.entity;
 
 import org.jetbrains.annotations.NotNull;
 

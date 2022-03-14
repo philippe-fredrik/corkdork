@@ -1,6 +1,6 @@
-package repository;
+package se.iths.corkdork.repository;
 
-import entity.UserEntity;
+import se.iths.corkdork.entity.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

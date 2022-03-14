@@ -1,8 +1,8 @@
-package service;
+package se.iths.corkdork.controller.service;
 
-import entity.GrapeEntity;
+import se.iths.corkdork.entity.GrapeEntity;
 import org.springframework.stereotype.Service;
-import repository.GrapeRepository;
+import se.iths.corkdork.repository.GrapeRepository;
 
 import java.util.Optional;
 

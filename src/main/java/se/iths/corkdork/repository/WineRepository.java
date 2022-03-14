@@ -1,6 +1,6 @@
-package repository;
+package se.iths.corkdork.repository;
 
-import entity.WineEntity;
+import se.iths.corkdork.entity.WineEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

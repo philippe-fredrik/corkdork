@@ -1,8 +1,8 @@
-package service;
+package se.iths.corkdork.controller.service;
 
-import entity.WineEntity;
+import se.iths.corkdork.entity.WineEntity;
 import org.springframework.stereotype.Service;
-import repository.WineRepository;
+import se.iths.corkdork.repository.WineRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;

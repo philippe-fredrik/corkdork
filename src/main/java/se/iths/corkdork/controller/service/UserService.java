@@ -1,8 +1,8 @@
-package service;
+package se.iths.corkdork.controller.service;
 
-import entity.UserEntity;
+import se.iths.corkdork.entity.UserEntity;
 import org.springframework.stereotype.Service;
-import repository.UserRepository;
+import se.iths.corkdork.repository.UserRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;

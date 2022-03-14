@@ -1,8 +1,8 @@
-package service;
+package se.iths.corkdork.controller.service;
 
-import entity.ColorEntity;
+import se.iths.corkdork.entity.ColorEntity;
 import org.springframework.stereotype.Service;
-import repository.ColorRepository;
+import se.iths.corkdork.repository.ColorRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;

@@ -16,4 +16,8 @@ updates:
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
+<<<<<<< HEAD
       interval: "daily"
+=======
+      interval: "daily"
+>>>>>>> 7c9e466 (add dependabot.yml)

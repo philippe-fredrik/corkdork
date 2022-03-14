@@ -1,9 +1,10 @@
 package repository;
 
-import entity.UserEntity;
+import entity.GrapeEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends CrudRepository<UserEntity, Long> {
+public interface GrapeRepository extends CrudRepository<GrapeEntity, Long> {
+
 }

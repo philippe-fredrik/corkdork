@@ -4,7 +4,7 @@ import se.iths.corkdork.entity.UserEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.iths.corkdork.controller.service.UserService;
+import se.iths.corkdork.service.UserService;
 
 import java.util.Optional;
 

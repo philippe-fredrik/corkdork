@@ -4,7 +4,7 @@ import se.iths.corkdork.entity.CountryEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.iths.corkdork.controller.service.CountryService;
+import se.iths.corkdork.service.CountryService;
 
 import java.util.Optional;
 

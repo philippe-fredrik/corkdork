@@ -4,7 +4,7 @@ import se.iths.corkdork.entity.GrapeEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.iths.corkdork.controller.service.GrapeService;
+import se.iths.corkdork.service.GrapeService;
 
 import java.util.Optional;
 

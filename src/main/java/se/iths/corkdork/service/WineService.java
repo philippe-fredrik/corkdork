@@ -1,4 +1,4 @@
-package se.iths.corkdork.controller.service;
+package se.iths.corkdork.service;
 
 import se.iths.corkdork.entity.WineEntity;
 import org.springframework.stereotype.Service;

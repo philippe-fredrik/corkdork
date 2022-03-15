@@ -3,6 +3,8 @@ package se.iths.corkdork.entity;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class UserEntity {
@@ -20,12 +22,33 @@ public class UserEntity {
     @NotNull
     private String email;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<RoleEntity> roles = new HashSet<>();
+
+    public void addRole(RoleEntity role) {
+        roles.add(role);
+        role.getUsers().add(this);
+    }
+
+    public void RemoveRole(RoleEntity role) {
+        roles.remove(role);
+        role.getUsers().remove(this);
+    }
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Set<RoleEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<RoleEntity> roles) {
+        this.roles = roles;
     }
 
     public String getUserName() {
@@ -59,4 +82,6 @@ public class UserEntity {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 }

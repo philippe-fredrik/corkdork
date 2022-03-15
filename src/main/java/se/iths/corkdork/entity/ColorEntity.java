@@ -2,10 +2,7 @@ package se.iths.corkdork.entity;
 
 import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class ColorEntity {
@@ -16,6 +13,9 @@ public class ColorEntity {
 
     @NotNull
     private String color;
+
+    @OneToOne
+    WineEntity wine;
 
     public Long getId() {
         return id;
@@ -32,4 +32,14 @@ public class ColorEntity {
     public void setColor(String color) {
         this.color = color;
     }
+
+    public WineEntity getWine() {
+        return wine;
+    }
+
+    public void setWine(WineEntity wine) {
+        this.wine = wine;
+    }
+
+
 }

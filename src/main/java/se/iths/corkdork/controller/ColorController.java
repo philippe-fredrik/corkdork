@@ -9,7 +9,7 @@ import se.iths.corkdork.service.ColorService;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("countries")
+@RequestMapping("colors")
 public class ColorController {
 
     ColorService colorService;

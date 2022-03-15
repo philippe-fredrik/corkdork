@@ -16,6 +16,8 @@ public class UserEntity {
     @NotNull
     private String lastName;
     @NotNull
+    private String userName;
+    @NotNull
     private String email;
 
     public Long getId() {
@@ -24,6 +26,14 @@ public class UserEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getFirstName() {

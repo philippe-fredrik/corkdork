@@ -3,6 +3,8 @@ package se.iths.corkdork.entity;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class CountryEntity {
@@ -13,6 +15,27 @@ public class CountryEntity {
 
     @NotNull
     private String countryName;
+
+    @OneToMany(mappedBy = "country",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<WineEntity> wines = new HashSet<>();
+
+    @OneToMany(mappedBy = "country",
+                cascade = CascadeType.ALL,
+                orphanRemoval = true)
+    private Set<GrapeEntity> grapes = new HashSet<>();
+
+
+    public void addWine(WineEntity wine) {
+        wines.add(wine);
+        wine.setCountry(this);
+    }
+
+    public void addGrape(GrapeEntity grape) {
+        grapes.add(grape);
+        grape.setCountry(this);
+    }
 
     public Long getId() {
         return id;
@@ -29,4 +52,22 @@ public class CountryEntity {
     public void setCountryName(String countryName) {
         this.countryName = countryName;
     }
+
+    public Set<WineEntity> getWines() {
+        return wines;
+    }
+
+    public void setWines(Set<WineEntity> wines) {
+        this.wines = wines;
+    }
+
+    public Set<GrapeEntity> getGrapes() {
+        return grapes;
+    }
+
+    public void setGrapes(Set<GrapeEntity> grapes) {
+        this.grapes = grapes;
+    }
+
+
 }

@@ -1,11 +1,9 @@
 package se.iths.corkdork.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class WineEntity {
@@ -16,6 +14,15 @@ public class WineEntity {
 
     @NotNull
     private String wineName;
+
+    @ManyToOne
+    private CountryEntity country;
+
+    @ManyToOne
+    private GrapeEntity grape;
+
+    @OneToOne
+    ColorEntity color;
 
     public Long getId() {
         return id;
@@ -31,5 +38,30 @@ public class WineEntity {
 
     public void setWineName(String wineName) {
         this.wineName = wineName;
+    }
+
+    @JsonIgnore
+    public CountryEntity getCountry() {
+        return country;
+    }
+
+    public void setCountry(CountryEntity country) {
+        this.country = country;
+    }
+
+    public GrapeEntity getGrape() {
+        return grape;
+    }
+
+    public void setGrape(GrapeEntity grape) {
+        this.grape = grape;
+    }
+
+    public ColorEntity getColor() {
+        return color;
+    }
+
+    public void setColor(ColorEntity color) {
+        this.color = color;
     }
 }

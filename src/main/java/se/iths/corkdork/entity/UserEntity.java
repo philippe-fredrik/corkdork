@@ -20,6 +20,8 @@ public class UserEntity {
     @NotNull
     private String userName;
     @NotNull
+    private String password;
+    @NotNull
     private String email;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -30,7 +32,7 @@ public class UserEntity {
         role.getUsers().add(this);
     }
 
-    public void RemoveRole(RoleEntity role) {
+    public void removeRole(RoleEntity role) {
         roles.remove(role);
         role.getUsers().remove(this);
     }
@@ -57,6 +59,14 @@ public class UserEntity {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {

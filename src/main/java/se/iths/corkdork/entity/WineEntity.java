@@ -13,7 +13,7 @@ public class WineEntity {
     private Long id;
 
     @NotNull
-    private String wineName;
+    private String name;
 
     @ManyToOne
     private CountryEntity country;
@@ -33,11 +33,11 @@ public class WineEntity {
     }
 
     public String getWineName() {
-        return wineName;
+        return name;
     }
 
-    public void setWineName(String wineName) {
-        this.wineName = wineName;
+    public void setWineName(String name) {
+        this.name = name;
     }
 
     @JsonIgnore

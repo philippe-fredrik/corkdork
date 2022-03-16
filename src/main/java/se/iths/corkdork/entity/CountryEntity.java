@@ -14,7 +14,7 @@ public class CountryEntity {
     private Long id;
 
     @NotNull
-    private String countryName;
+    private String name;
 
     @OneToMany(mappedBy = "country",
             cascade = CascadeType.ALL,
@@ -46,11 +46,11 @@ public class CountryEntity {
     }
 
     public String getCountryName() {
-        return countryName;
+        return name;
     }
 
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
+    public void setCountryName(String name) {
+        this.name = name;
     }
 
     public Set<WineEntity> getWines() {

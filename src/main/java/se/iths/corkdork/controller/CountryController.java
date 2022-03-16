@@ -18,7 +18,7 @@ public class CountryController {
         this.countryService = countryService;
     }
 
-    @PostMapping("create")
+    @PostMapping("")
     public ResponseEntity<CountryEntity> createCountry(@RequestBody CountryEntity countryEntity){
         CountryEntity createdCountry = countryService.createCountry(countryEntity);
 

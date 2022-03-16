@@ -18,7 +18,7 @@ public class WineController {
         this.wineService = wineService;
     }
 
-    @PostMapping("create")
+    @PostMapping("")
     public ResponseEntity<WineEntity> createWine(@RequestBody WineEntity wineEntity){
         WineEntity createdWine = wineService.createWine(wineEntity);
 

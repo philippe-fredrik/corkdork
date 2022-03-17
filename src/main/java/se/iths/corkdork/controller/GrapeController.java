@@ -18,7 +18,7 @@ public class GrapeController {
         this.grapeService = grapeService;
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<GrapeEntity> createGrape(@RequestBody GrapeEntity grapeEntity) {
         GrapeEntity createdGrape = grapeService.createGrape(grapeEntity);
         return new ResponseEntity<>(createdGrape, HttpStatus.CREATED);
@@ -30,7 +30,7 @@ public class GrapeController {
         return new ResponseEntity<>(foundGrape, HttpStatus.OK);
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<Iterable<GrapeEntity>> findAllGrapes() {
         Iterable<GrapeEntity> allGrapes = grapeService.getAllGrapes();
         return new ResponseEntity<>(allGrapes, HttpStatus.OK);

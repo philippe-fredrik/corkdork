@@ -39,7 +39,7 @@ public class UserController {
         return new ResponseEntity<>(foundUser, HttpStatus.OK);
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<Iterable<UserEntity>> findAllUsers(){
         Iterable<UserEntity> allUsers = userService.findAllUsers();
         return new ResponseEntity<>(allUsers, HttpStatus.OK);

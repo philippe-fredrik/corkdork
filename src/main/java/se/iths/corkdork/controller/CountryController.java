@@ -18,7 +18,7 @@ public class CountryController {
         this.countryService = countryService;
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<CountryEntity> createCountry(@RequestBody CountryEntity countryEntity){
         CountryEntity createdCountry = countryService.createCountry(countryEntity);
 
@@ -39,7 +39,7 @@ public class CountryController {
         return new ResponseEntity<>(foundCountry, HttpStatus.OK);
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<Iterable<CountryEntity>> findAllCountries(){
         Iterable<CountryEntity> allCountries = countryService.findAllCountries();
         return new ResponseEntity<>(allCountries, HttpStatus.OK);

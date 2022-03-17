@@ -18,7 +18,7 @@ public class ColorController {
         this.colorService = colorService;
     }
 
-    @PostMapping("create")
+    @PostMapping
     public ResponseEntity<ColorEntity> createColor(@RequestBody ColorEntity colorEntity){
         ColorEntity createdColor = colorService.createColor(colorEntity);
 
@@ -38,7 +38,7 @@ public class ColorController {
         return new ResponseEntity<>(foundColor,HttpStatus.OK);
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<Iterable<ColorEntity>> findAllColors(){
         Iterable<ColorEntity> allColors = colorService.findAllCountries();
         return new ResponseEntity<>(allColors, HttpStatus.OK);

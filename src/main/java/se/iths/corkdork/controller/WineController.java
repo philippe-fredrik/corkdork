@@ -18,7 +18,7 @@ public class WineController {
         this.wineService = wineService;
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<WineEntity> createWine(@RequestBody WineEntity wineEntity){
         WineEntity createdWine = wineService.createWine(wineEntity);
 
@@ -38,7 +38,7 @@ public class WineController {
         return new ResponseEntity<>(foundWine, HttpStatus.OK);
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<Iterable<WineEntity>> findAllWines(){
         Iterable<WineEntity> allWines = wineService.findAllWines();
         return new ResponseEntity<>(allWines, HttpStatus.OK);

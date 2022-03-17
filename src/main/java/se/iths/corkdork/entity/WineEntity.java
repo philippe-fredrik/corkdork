@@ -32,11 +32,11 @@ public class WineEntity {
         this.id = id;
     }
 
-    public String getWineName() {
+    public String getName() {
         return name;
     }
 
-    public void setWineName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 

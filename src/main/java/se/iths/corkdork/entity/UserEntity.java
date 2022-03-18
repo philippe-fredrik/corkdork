@@ -1,6 +1,7 @@
 package se.iths.corkdork.entity;
 
 import org.jetbrains.annotations.NotNull;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,15 +14,10 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
     private String firstName;
-    @NotNull
     private String lastName;
-    @NotNull
     private String userName;
-    @NotNull
     private String password;
-    @NotNull
     private String email;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

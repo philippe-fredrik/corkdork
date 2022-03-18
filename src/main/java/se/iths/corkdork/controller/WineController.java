@@ -32,6 +32,15 @@ public class WineController {
         return new ResponseEntity<>(wineService.updateWine(id, name), OK);
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<Object> updateWine(@PathVariable Long id, @RequestBody WineEntity wineEntity) {
+        if(wineService.findWineById(id).isEmpty())
+            throw new EntityNotFoundException(notFound(id));
+
+        wineService.updateWine(id, wineEntity);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @DeleteMapping({"{id}"})
     public ResponseEntity<Void> deleteWine(@PathVariable Long id){
         wineService.deleteWine(id);

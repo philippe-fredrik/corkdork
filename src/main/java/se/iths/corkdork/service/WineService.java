@@ -22,11 +22,17 @@ public class WineService {
     }
 
     @Transactional
-    public WineEntity updateWine(Long id, String name) {
+    public WineEntity updateWineName(Long id, String name) {
         WineEntity fromDatabase = wineRepository.findById(id).orElseThrow();
         fromDatabase.setName(name);
 
         return wineRepository.save(fromDatabase);
+    }
+
+    @Transactional
+    public void updateWine(Long id, WineEntity wineEntity) {
+        WineEntity foundWine = wineRepository.findById(id).orElseThrow();
+        wineRepository.save(foundWine);
     }
 
     public void deleteWine(Long id){

@@ -1,9 +1,11 @@
 package se.iths.corkdork.exception;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -12,7 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import static org.springframework.http.HttpStatus.*;
 
 @ControllerAdvice
-public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
         return new ResponseEntity<>(apiError, apiError.getStatus());
@@ -24,7 +26,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }
-
 
     @ExceptionHandler
     protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
@@ -39,4 +40,27 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }
+
+    @NonNull
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(
+            @NotNull
+            HttpMessageNotReadableException ex,
+            @NotNull
+            HttpHeaders headers,
+            @NotNull
+            HttpStatus status,
+            @NotNull
+            WebRequest request) {
+        String error = "Malformed JSON request";
+        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, error, ex));
+    }
+
+    @ExceptionHandler({Exception.class})
+    public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
+        String errorMessage = "An unexpected error occurred.";
+
+        return buildResponseEntity(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, ex));
+    }
+
 }

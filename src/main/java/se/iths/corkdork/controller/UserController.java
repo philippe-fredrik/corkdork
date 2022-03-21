@@ -26,6 +26,15 @@ public class UserController {
 
     }
 
+    @PutMapping
+    public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @RequestBody UserEntity userEntity) {
+        if(userService.findUserById(id).isEmpty())
+            throw new EntityNotFoundException(notFound(id));
+
+        userService.updateUser(id, userEntity);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         userService.deleteUser(id);

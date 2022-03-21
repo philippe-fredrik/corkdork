@@ -1,0 +1,28 @@
+2022-03-19 17:17:06,606 INFO org.springframework.boot.StartupInfoLogger [main] Starting CorkDorkApplication using Java 17.0.2 on DESKTOP-M5MIBBQ with PID 22768 (D:\IntellijProjects\corkdork\target\classes started by Fredrik in D:\IntellijProjects\corkdork)
+2022-03-19 17:17:06,609 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-03-19 17:17:06,983 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-03-19 17:17:07,022 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 32 ms. Found 6 JPA repository interfaces.
+2022-03-19 17:17:07,303 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2022-03-19 17:17:07,308 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
+2022-03-19 17:17:07,309 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2022-03-19 17:17:07,309 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-03-19 17:17:07,362 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2022-03-19 17:17:07,362 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 721 ms
+2022-03-19 17:17:07,475 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-03-19 17:17:07,503 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.5.Final
+2022-03-19 17:17:07,576 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-03-19 17:17:07,631 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2022-03-19 17:17:07,820 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2022-03-19 17:17:07,833 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2022-03-19 17:17:08,298 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-03-19 17:17:08,303 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-03-19 17:17:08,481 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-03-19 17:17:08,690 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8080"]
+2022-03-19 17:17:08,704 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path ''
+2022-03-19 17:17:08,711 INFO org.springframework.boot.StartupInfoLogger [main] Started CorkDorkApplication in 2.441 seconds (JVM running for 2.931)
+2022-03-19 17:17:12,952 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-03-19 17:17:12,952 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2022-03-19 17:17:12,953 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 1 ms
+2022-03-19 17:17:12,965 INFO se.iths.corkdork.logger.LoggingController [http-nio-8080-exec-1] A INFO Message
+2022-03-19 17:17:12,965 WARN se.iths.corkdork.logger.LoggingController [http-nio-8080-exec-1] A WARN Message
+2022-03-19 17:17:12,965 ERROR se.iths.corkdork.logger.LoggingController [http-nio-8080-exec-1] A ERROR Message

@@ -10,8 +10,6 @@ public class ColorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @NotNull
     private String color;
 
     @OneToOne

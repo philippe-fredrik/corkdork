@@ -12,8 +12,6 @@ public class CountryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @NotNull
     private String name;
 
     @OneToMany(mappedBy = "country",

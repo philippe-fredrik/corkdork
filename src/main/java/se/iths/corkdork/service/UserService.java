@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import se.iths.corkdork.repository.UserRepository;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -33,4 +34,9 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    @Transactional
+    public void updateUser(Long id, UserEntity userEntity) {
+        UserEntity foundUser = userRepository.findById(id).orElseThrow();
+        userRepository.save(foundUser);
+    }
 }

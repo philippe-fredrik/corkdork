@@ -4,6 +4,8 @@ import se.iths.corkdork.entity.CountryEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import se.iths.corkdork.exception.BadRequestException;
+import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.CountryService;
 
 import java.util.Optional;
@@ -18,16 +20,29 @@ public class CountryController {
         this.countryService = countryService;
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<CountryEntity> createCountry(@RequestBody CountryEntity countryEntity){
+        if(countryEntity.getCountryName().isEmpty())
+            throw new BadRequestException("Name field is mandatory");
+
         CountryEntity createdCountry = countryService.createCountry(countryEntity);
-
         return new ResponseEntity<>(createdCountry, HttpStatus.CREATED);
+    }
 
+    @PutMapping
+    public ResponseEntity<CountryEntity> updateCountry(@PathVariable Long id, @RequestBody CountryEntity countryEntity){
+        if(countryService.findCountryById(id).isEmpty())
+            throw new EntityNotFoundException(notFound(id));
+
+        countryService.updateCountry(id, countryEntity);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteCountry(@PathVariable Long id){
+        if(countryService.findCountryById(id).isEmpty())
+            throw new EntityNotFoundException(notFound(id));
+
         countryService.deleteCountry(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
@@ -35,15 +50,22 @@ public class CountryController {
 
     @GetMapping("{id}")
     public ResponseEntity<Optional<CountryEntity>> findCountryById(@PathVariable Long id){
+        if(countryService.findCountryById(id).isEmpty())
+            throw new EntityNotFoundException(notFound(id));
+
         Optional<CountryEntity> foundCountry = countryService.findCountryById(id);
         return new ResponseEntity<>(foundCountry, HttpStatus.OK);
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<Iterable<CountryEntity>> findAllCountries(){
         Iterable<CountryEntity> allCountries = countryService.findAllCountries();
+        if(!allCountries.iterator().hasNext())
+            throw new EntityNotFoundException("Failed to find any wines.");
         return new ResponseEntity<>(allCountries, HttpStatus.OK);
     }
 
-
+    private String notFound(Long id) {
+        return "Country with ID: " +id+ " was not found.";
+    }
 }

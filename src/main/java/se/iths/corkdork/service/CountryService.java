@@ -1,10 +1,14 @@
 package se.iths.corkdork.service;
 
+import se.iths.corkdork.entity.ColorEntity;
 import se.iths.corkdork.entity.CountryEntity;
 import org.springframework.stereotype.Service;
+import se.iths.corkdork.entity.GrapeEntity;
 import se.iths.corkdork.repository.CountryRepository;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
+import java.awt.*;
 import java.util.Optional;
 
 @Service
@@ -33,4 +37,9 @@ public class CountryService {
         return countryRepository.findAll();
     }
 
+    @Transactional
+    public void updateCountry(Long id, CountryEntity countryEntity) {
+        CountryEntity foundCountry = countryRepository.findById(id).orElseThrow();
+        countryRepository.save(foundCountry);
+    }
 }

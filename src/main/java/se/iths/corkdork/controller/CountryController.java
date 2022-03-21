@@ -23,7 +23,6 @@ public class CountryController {
         CountryEntity createdCountry = countryService.createCountry(countryEntity);
 
         return new ResponseEntity<>(createdCountry, HttpStatus.CREATED);
-
     }
 
     @DeleteMapping("{id}")

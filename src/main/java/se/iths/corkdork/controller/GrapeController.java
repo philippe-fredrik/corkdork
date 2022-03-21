@@ -1,9 +1,11 @@
 package se.iths.corkdork.controller;
 
+import org.jetbrains.annotations.NotNull;
 import se.iths.corkdork.entity.GrapeEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.GrapeService;
 
 import java.util.Optional;
@@ -30,6 +32,15 @@ public class GrapeController {
         return new ResponseEntity<>(foundGrape, HttpStatus.OK);
     }
 
+    @PutMapping
+    public ResponseEntity<GrapeEntity> updateGrape(@PathVariable Long id, @PathVariable GrapeEntity grapeEntity) {
+        if(grapeService.findById(id).isEmpty())
+            throw new EntityNotFoundException(notFound(id));
+
+        grapeService.updateGrape(id, grapeEntity);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<Iterable<GrapeEntity>> findAllGrapes() {
         Iterable<GrapeEntity> allGrapes = grapeService.getAllGrapes();
@@ -40,5 +51,10 @@ public class GrapeController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         grapeService.deleteGrape(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @NotNull
+    private String notFound(Long id) {
+        return "Grape with ID: " + id + " was not found.";
     }
 }

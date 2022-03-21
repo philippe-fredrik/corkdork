@@ -31,4 +31,8 @@ public class ColorService {
     public Iterable<ColorEntity> findAllCountries(){
         return colorRepository.findAll();
     }
+
+    public void updateColor(Long id, ColorEntity colorEntity) {
+
+    }
 }

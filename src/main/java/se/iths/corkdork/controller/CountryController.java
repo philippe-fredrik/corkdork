@@ -29,6 +29,15 @@ public class CountryController {
         return new ResponseEntity<>(createdCountry, HttpStatus.CREATED);
     }
 
+    @PutMapping
+    public ResponseEntity<CountryEntity> updateCountry(@PathVariable Long id, @RequestBody CountryEntity countryEntity){
+        if(countryService.findCountryById(id).isEmpty())
+            throw new EntityNotFoundException(notFound(id));
+
+        countryService.updateCountry(id, countryEntity);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteCountry(@PathVariable Long id){
         if(countryService.findCountryById(id).isEmpty())

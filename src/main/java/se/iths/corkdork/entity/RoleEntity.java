@@ -1,12 +1,10 @@
 package se.iths.corkdork.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
-
-
 @Entity
 public class RoleEntity {
 
@@ -14,19 +12,23 @@ public class RoleEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String role;
-
-    @ManyToMany(mappedBy = "roles")
-    private Set<UserEntity> users;
+    @OneToMany(mappedBy = "role")
+    private Set<UserEntity> users = new HashSet<>();
 
     public RoleEntity(String role) {
         this.role = role;
     }
 
     public RoleEntity() {
+
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void addUser(UserEntity user) {
+        users.add(user);
     }
 
     public void setId(Long id) {
@@ -49,6 +51,4 @@ public class RoleEntity {
     public void setUsers(Set<UserEntity> users) {
         this.users = users;
     }
-
-
 }

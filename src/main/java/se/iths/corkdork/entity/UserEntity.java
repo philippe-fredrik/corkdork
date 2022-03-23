@@ -1,10 +1,7 @@
 package se.iths.corkdork.entity;
 
-import org.springframework.lang.Nullable;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Entity
 public class UserEntity {
@@ -52,6 +49,7 @@ public class UserEntity {
 
     public void setRole(RoleEntity role) {
         this.role = role;
+        role.addUser(this);
     }
 
     public String getUsername() {

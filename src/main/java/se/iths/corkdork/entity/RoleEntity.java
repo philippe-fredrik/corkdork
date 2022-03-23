@@ -12,7 +12,8 @@ public class RoleEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String role;
-    @OneToMany(mappedBy = "role")
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "role")
     private Set<UserEntity> users = new HashSet<>();
 
     public RoleEntity(String role) {
@@ -20,7 +21,6 @@ public class RoleEntity {
     }
 
     public RoleEntity() {
-
     }
 
     public Long getId() {

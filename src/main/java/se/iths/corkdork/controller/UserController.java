@@ -31,7 +31,7 @@ public class UserController {
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
-    @PutMapping
+    @PutMapping("{id}")
     public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @RequestBody UserEntity userEntity) {
         if(userService.findUserById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));

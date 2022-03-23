@@ -33,4 +33,9 @@ public class RoleService {
         RoleEntity foundRole = roleRepository.findById(id).orElseThrow();
         roleRepository.save(foundRole);
     }
+
+    public void deleteUser(Long id) {
+        RoleEntity foundRole = roleRepository.findById(id).orElseThrow();
+        roleRepository.delete(foundRole);
+    }
 }

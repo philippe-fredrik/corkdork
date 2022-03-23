@@ -13,7 +13,7 @@ public class RoleEntity {
     private Long id;
     private String role;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "role")
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL, mappedBy = "role")
     private Set<UserEntity> users = new HashSet<>();
 
     public RoleEntity(String role) {

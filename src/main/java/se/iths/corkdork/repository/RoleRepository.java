@@ -6,4 +6,5 @@ import se.iths.corkdork.entity.RoleEntity;
 
 @Repository
 public interface RoleRepository extends CrudRepository<RoleEntity, Long> {
+    RoleEntity findByRole(String role);
 }

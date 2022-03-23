@@ -21,9 +21,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping()
+    @PostMapping("signup")
     public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity userEntity){
-        if(userEntity.getFirstName().isEmpty() || userEntity.getLastName().isEmpty() || userEntity.getUserName().isEmpty()
+        if(userEntity.getFirstName().isEmpty() || userEntity.getLastName().isEmpty() || userEntity.getUsername().isEmpty()
         || userEntity.getPassword().isEmpty() || userEntity.getEmail().isEmpty())
             throw new BadRequestException("Every user credential is mandatory");
 

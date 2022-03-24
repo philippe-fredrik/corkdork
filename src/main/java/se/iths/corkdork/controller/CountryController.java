@@ -1,5 +1,6 @@
 package se.iths.corkdork.controller;
 
+import se.iths.corkdork.dtos.Country;
 import se.iths.corkdork.entity.CountryEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,20 +22,20 @@ public class CountryController {
     }
 
     @PostMapping
-    public ResponseEntity<CountryEntity> createCountry(@RequestBody CountryEntity countryEntity){
-        if(countryEntity.getCountryName().isEmpty())
+    public ResponseEntity<Country> createCountry(@RequestBody Country country){
+        if(country.getName().isEmpty())
             throw new BadRequestException("Name field is mandatory");
 
-        CountryEntity createdCountry = countryService.createCountry(countryEntity);
+        Country createdCountry = countryService.createCountry(country);
         return new ResponseEntity<>(createdCountry, HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<CountryEntity> updateCountry(@PathVariable Long id, @RequestBody CountryEntity countryEntity){
+    @PutMapping("{id}")
+    public ResponseEntity<Country> updateCountry(@PathVariable Long id, @RequestBody Country country){
         if(countryService.findCountryById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
 
-        countryService.updateCountry(id, countryEntity);
+        countryService.updateCountry(id, country);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

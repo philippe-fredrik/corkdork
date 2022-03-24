@@ -1,6 +1,7 @@
 package se.iths.corkdork.controller;
 
 import org.jetbrains.annotations.NotNull;
+import se.iths.corkdork.dtos.Wine;
 import se.iths.corkdork.entity.WineEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +25,11 @@ public class WineController {
     }
 
     @PostMapping
-    public ResponseEntity<WineEntity> createWine(@RequestBody WineEntity wineEntity){
-        if(wineEntity.getName().isEmpty())
+    public ResponseEntity<Wine> createWine(@RequestBody Wine wine){
+        if(wine.getName().isEmpty())
             throw new BadRequestException("Name cannot be empty.");
 
-        WineEntity createdWine = wineService.createWine(wineEntity);
+        Wine createdWine = wineService.createWine(wine);
         return new ResponseEntity<>(createdWine, HttpStatus.CREATED);
     }
 
@@ -38,11 +39,11 @@ public class WineController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Object> updateWine(@PathVariable Long id, @RequestBody WineEntity wineEntity) {
+    public ResponseEntity<Object> updateWine(@PathVariable Long id, @RequestBody Wine wine) {
         if(wineService.findWineById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
 
-        wineService.updateWine(id, wineEntity);
+        wineService.updateWine(id, wine);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

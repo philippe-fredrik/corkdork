@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import se.iths.corkdork.entity.RoleEntity;
 import se.iths.corkdork.entity.UserEntity;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class UserPrincipal implements UserDetails {
 
@@ -20,7 +20,11 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + userEntity.getRole()));
+        RoleEntity role = userEntity.getRole();
+        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRole().toUpperCase()));
+
+        return grantedAuthorities;
     }
 
     @Override

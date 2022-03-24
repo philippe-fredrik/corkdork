@@ -1,6 +1,9 @@
 package se.iths.corkdork.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 @Entity
@@ -21,18 +24,19 @@ public class UserEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     RoleEntity role;
 
     public UserEntity() {
     }
 
-    public UserEntity(String firstName, String lastName, String username, String password, String email) {
+    public UserEntity(String firstName, String lastName, String username, String password, String email, RoleEntity role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.role = role;
     }
 
     public Long getId() {
@@ -91,6 +95,5 @@ public class UserEntity {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
 }

@@ -2,7 +2,6 @@ package se.iths.corkdork.service;
 
 import se.iths.corkdork.entity.GrapeEntity;
 import org.springframework.stereotype.Service;
-import se.iths.corkdork.entity.UserEntity;
 import se.iths.corkdork.repository.GrapeRepository;
 
 import javax.transaction.Transactional;

@@ -33,6 +33,8 @@ public class ColorService {
     }
 
     public void updateColor(Long id, ColorEntity colorEntity) {
+        ColorEntity foundColor = colorRepository.findById(id).orElseThrow();
+        colorRepository.save(foundColor);
 
     }
 }

@@ -34,12 +34,12 @@ public class WineController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<WineEntity> updateWineName(@PathVariable Long id, @RequestBody String name) {
+    public ResponseEntity<Wine> updateWineName(@PathVariable Long id, @RequestBody String name) {
         return new ResponseEntity<>(wineService.updateWineName(id, name), OK);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Object> updateWine(@PathVariable Long id, @RequestBody Wine wine) {
+    public ResponseEntity<Wine> updateWine(@PathVariable Long id, @RequestBody Wine wine) {
         if(wineService.findWineById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
 

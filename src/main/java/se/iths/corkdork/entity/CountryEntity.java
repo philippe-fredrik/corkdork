@@ -1,7 +1,5 @@
 package se.iths.corkdork.entity;
 
-import org.jetbrains.annotations.NotNull;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

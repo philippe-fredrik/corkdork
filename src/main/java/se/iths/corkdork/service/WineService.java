@@ -4,7 +4,6 @@ import org.modelmapper.ModelMapper;
 import se.iths.corkdork.dtos.Wine;
 import se.iths.corkdork.entity.WineEntity;
 import org.springframework.stereotype.Service;
-import se.iths.corkdork.mappers.WineMapper;
 import se.iths.corkdork.repository.WineRepository;
 
 import javax.persistence.EntityNotFoundException;
@@ -31,20 +30,19 @@ public class WineService {
     }
 
     @Transactional
-    public WineEntity updateWineName(Long id, String name) {
+    public Wine updateWineName(Long id, String name) {
         WineEntity fromDatabase = wineRepository.findById(id).orElseThrow();
         fromDatabase.setName(name);
 
-        return wineRepository.save(fromDatabase);
+        return modelMapper.map(wineRepository.save(fromDatabase), Wine.class);
     }
 
     @Transactional
     public void updateWine(Long id, Wine wine) {
 
-        WineEntity foundWine = WineMapper.wineToWineEntity(wine);
-
-        wineRepository.findById(id).orElseThrow();
+        WineEntity foundWine = wineRepository.findById(id).orElseThrow();
         wineRepository.save(foundWine);
+
     }
 
     public void deleteWine(Long id){

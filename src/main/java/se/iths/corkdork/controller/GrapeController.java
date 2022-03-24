@@ -1,6 +1,7 @@
 package se.iths.corkdork.controller;
 
 import org.jetbrains.annotations.NotNull;
+import se.iths.corkdork.dtos.Grape;
 import se.iths.corkdork.entity.GrapeEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +23,11 @@ public class GrapeController {
     }
 
     @PostMapping
-    public ResponseEntity<GrapeEntity> createGrape(@RequestBody GrapeEntity grapeEntity) {
-        if(grapeEntity.getName().isEmpty() || grapeEntity.getColor().isEmpty())
+    public ResponseEntity<Grape> createGrape(@RequestBody Grape grape) {
+        if(grape.getName().isEmpty() || grape.getColor().isEmpty())
             throw new BadRequestException("Name and color fields are mandatory");
 
-        GrapeEntity createdGrape = grapeService.createGrape(grapeEntity);
+        Grape createdGrape = grapeService.createGrape(grape);
         return new ResponseEntity<>(createdGrape, HttpStatus.CREATED);
     }
 
@@ -39,12 +40,12 @@ public class GrapeController {
         return new ResponseEntity<>(foundGrape, HttpStatus.OK);
     }
 
-    @PutMapping
-    public ResponseEntity<GrapeEntity> updateGrape(@PathVariable Long id, @PathVariable GrapeEntity grapeEntity) {
+    @PutMapping("{id}")
+    public ResponseEntity<GrapeEntity> updateGrape(@PathVariable Long id, @RequestBody Grape grape) {
         if(grapeService.findById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
 
-        grapeService.updateGrape(id, grapeEntity);
+        grapeService.updateGrape(id, grape);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

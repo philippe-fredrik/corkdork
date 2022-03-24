@@ -1,5 +1,7 @@
 package se.iths.corkdork.service;
 
+import org.modelmapper.ModelMapper;
+import se.iths.corkdork.dtos.Grape;
 import se.iths.corkdork.entity.GrapeEntity;
 import org.springframework.stereotype.Service;
 import se.iths.corkdork.repository.GrapeRepository;
@@ -12,12 +14,18 @@ public class GrapeService {
 
     private final GrapeRepository grapeRepository;
 
-    public GrapeService(GrapeRepository grapeRepository) {
+    private final ModelMapper modelMapper;
+
+    public GrapeService(GrapeRepository grapeRepository, ModelMapper modelMapper) {
         this.grapeRepository = grapeRepository;
+        this.modelMapper = modelMapper;
     }
 
-    public GrapeEntity createGrape(GrapeEntity grapeEntity) {
-        return grapeRepository.save(grapeEntity);
+    public Grape createGrape(Grape grape) {
+
+        GrapeEntity grapeEntity = modelMapper.map(grape, GrapeEntity.class);
+
+        return modelMapper.map(grapeRepository.save(grapeEntity), Grape.class);
     }
 
     public Optional<GrapeEntity> findById(Long id) {
@@ -33,7 +41,7 @@ public class GrapeService {
    }
 
     @Transactional
-    public void updateGrape(Long id, GrapeEntity grapeEntity) {
+    public void updateGrape(Long id, Grape grape) {
         GrapeEntity foundGrape = grapeRepository.findById(id).orElseThrow();
         grapeRepository.save(foundGrape);
     }

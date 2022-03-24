@@ -6,7 +6,6 @@ import se.iths.corkdork.entity.GrapeEntity;
 
 public class Wine {
 
-
     private Long id;
     private String name;
     private CountryEntity country;

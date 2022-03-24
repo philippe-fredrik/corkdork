@@ -11,6 +11,7 @@ public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(nullable = false)
     private String role;
 
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL, mappedBy = "role")

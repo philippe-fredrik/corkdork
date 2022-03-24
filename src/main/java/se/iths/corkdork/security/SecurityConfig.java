@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/home", "/users/signup").permitAll()
-                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/users", "/users/").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -33,13 +33,11 @@ public class SecurityConfig {
                 .logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .permitAll().and().build();
+                .and().build();
     }
 
     @Bean
     PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-
-
 }

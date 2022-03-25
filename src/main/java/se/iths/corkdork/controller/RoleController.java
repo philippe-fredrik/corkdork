@@ -2,8 +2,9 @@ package se.iths.corkdork.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.MethodNotAllowedException;
 import se.iths.corkdork.entity.RoleEntity;
 import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
@@ -12,6 +13,7 @@ import se.iths.corkdork.service.RoleService;
 import java.util.Optional;
 
 @RestController
+@Secured("ADMIN") //Only admin permitted to use requests on roles.
 @RequestMapping("roles")
 public class RoleController {
 

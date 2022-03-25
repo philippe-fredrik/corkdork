@@ -1,25 +1,16 @@
-package se.iths.corkdork.entity;
+package se.iths.corkdork.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import se.iths.corkdork.entity.ColorEntity;
+import se.iths.corkdork.entity.CountryEntity;
+import se.iths.corkdork.entity.GrapeEntity;
 
-import javax.persistence.*;
+public class Wine {
 
-@Entity
-public class WineEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-
-    @ManyToOne
     private CountryEntity country;
-
-    @ManyToOne
     private GrapeEntity grape;
-
-    @OneToOne
-    ColorEntity color;
+    private ColorEntity color;
 
     public Long getId() {
         return id;
@@ -37,7 +28,6 @@ public class WineEntity {
         this.name = name;
     }
 
-    @JsonIgnore
     public CountryEntity getCountry() {
         return country;
     }

@@ -23,7 +23,7 @@ public class WineController {
         this.wineService = wineService;
     }
 
-    @PostMapping
+    @PostMapping("admin/create")
     public ResponseEntity<WineEntity> createWine(@RequestBody WineEntity wineEntity){
         if(wineEntity.getName().isEmpty())
             throw new BadRequestException("Name cannot be empty.");
@@ -37,7 +37,7 @@ public class WineController {
         return new ResponseEntity<>(wineService.updateWineName(id, name), OK);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("admin/{id}")
     public ResponseEntity<Object> updateWine(@PathVariable Long id, @RequestBody WineEntity wineEntity) {
         if(wineService.findWineById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
@@ -46,7 +46,7 @@ public class WineController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping({"{id}"})
+    @DeleteMapping({"admin/{id}"})
     public ResponseEntity<Void> deleteWine(@PathVariable Long id){
         if(wineService.findWineById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
@@ -55,7 +55,7 @@ public class WineController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("public/{id}")
     public ResponseEntity<Optional<WineEntity>> findWineById(@PathVariable Long id) {
         if(wineService.findWineById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
@@ -64,7 +64,7 @@ public class WineController {
         return new ResponseEntity<>(foundWine, OK);
     }
 
-    @GetMapping
+    @GetMapping("public")
     public ResponseEntity<Iterable<WineEntity>> findAllWines(){
         Iterable<WineEntity> allWines = wineService.findAllWines();
         if(!allWines.iterator().hasNext())

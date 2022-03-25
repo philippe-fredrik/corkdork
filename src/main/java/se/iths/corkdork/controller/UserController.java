@@ -31,7 +31,7 @@ public class UserController {
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("admin/{id}")
     public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @RequestBody UserEntity userEntity) {
         if(userService.findUserById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
@@ -40,7 +40,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("admin/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         if(userService.findUserById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
@@ -49,7 +49,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("public/{id}")
     public ResponseEntity<Optional<UserEntity>> findUserById(@PathVariable Long id){
         if(userService.findUserById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
@@ -58,7 +58,7 @@ public class UserController {
         return new ResponseEntity<>(foundUser, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("public")
     public ResponseEntity<Iterable<UserEntity>> findAllUsers(){
         Iterable<UserEntity> allUsers = userService.findAllUsers();
         if(!allUsers.iterator().hasNext())

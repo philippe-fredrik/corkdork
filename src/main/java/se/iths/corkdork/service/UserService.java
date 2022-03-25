@@ -45,9 +45,9 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    @Transactional
     public void updateUser(Long id, UserEntity userEntity) {
-        UserEntity foundUser = userRepository.findById(id).orElseThrow();
-        userRepository.save(foundUser);
+        userEntity.setId(id);
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        userRepository.save(userEntity);
     }
 }

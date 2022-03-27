@@ -23,8 +23,8 @@ public class CountryController {
 
     @PostMapping
     public ResponseEntity<Country> createCountry(@RequestBody Country country){
-        if(country.getName().isEmpty())
-            throw new BadRequestException("Name field is mandatory");
+//        if(country.getName().isEmpty())
+//            throw new BadRequestException("Name field is mandatory");
 
         Country createdCountry = countryService.createCountry(country);
         return new ResponseEntity<>(createdCountry, HttpStatus.CREATED);

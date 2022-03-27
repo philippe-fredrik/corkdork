@@ -24,8 +24,9 @@ public class GrapeController {
 
     @PostMapping
     public ResponseEntity<Grape> createGrape(@RequestBody Grape grape) {
-        if(grape.getName().isEmpty() || grape.getColor().isEmpty())
-            throw new BadRequestException("Name and color fields are mandatory");
+
+//        if(grape.getName().isEmpty() || grape.getColor().isEmpty())
+//            throw new BadRequestException("Name and color fields are mandatory");
 
         Grape createdGrape = grapeService.createGrape(grape);
         return new ResponseEntity<>(createdGrape, HttpStatus.CREATED);

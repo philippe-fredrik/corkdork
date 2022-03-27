@@ -26,8 +26,8 @@ public class WineController {
 
     @PostMapping
     public ResponseEntity<Wine> createWine(@RequestBody Wine wine){
-        if(wine.getName().isEmpty())
-            throw new BadRequestException("Name cannot be empty.");
+//        if(wine.getName().isEmpty())
+//            throw new BadRequestException("Name cannot be empty.");
 
         Wine createdWine = wineService.createWine(wine);
         return new ResponseEntity<>(createdWine, HttpStatus.CREATED);

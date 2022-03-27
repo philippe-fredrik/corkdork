@@ -1,5 +1,7 @@
 package se.iths.corkdork.entity;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +12,7 @@ public class GrapeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotNull
     private String name;
     private String color;
 

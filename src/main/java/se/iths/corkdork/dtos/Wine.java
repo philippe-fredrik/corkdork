@@ -1,6 +1,5 @@
 package se.iths.corkdork.dtos;
 
-import se.iths.corkdork.entity.ColorEntity;
 import se.iths.corkdork.entity.CountryEntity;
 import se.iths.corkdork.entity.GrapeEntity;
 
@@ -10,7 +9,6 @@ public class Wine {
     private String name;
     private CountryEntity country;
     private GrapeEntity grape;
-    private ColorEntity color;
 
     public Long getId() {
         return id;
@@ -44,11 +42,4 @@ public class Wine {
         this.grape = grape;
     }
 
-    public ColorEntity getColor() {
-        return color;
-    }
-
-    public void setColor(ColorEntity color) {
-        this.color = color;
-    }
 }

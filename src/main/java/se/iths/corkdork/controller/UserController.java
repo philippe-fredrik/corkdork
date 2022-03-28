@@ -1,6 +1,7 @@
 package se.iths.corkdork.controller;
 
 import org.jetbrains.annotations.NotNull;
+import se.iths.corkdork.dtos.User;
 import se.iths.corkdork.entity.UserEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,21 +23,21 @@ public class UserController {
     }
 
     @PostMapping("signup")
-    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity userEntity){
-        if(userEntity.getFirstName().isEmpty() || userEntity.getLastName().isEmpty() || userEntity.getUsername().isEmpty()
-        || userEntity.getPassword().isEmpty() || userEntity.getEmail().isEmpty())
+    public ResponseEntity<User> createUser(@RequestBody User user){
+        if(user.getFirstName().isEmpty() || user.getLastName().isEmpty() || user.getUserName().isEmpty()
+        || user.getPassword().isEmpty() || user.getEmail().isEmpty())
             throw new BadRequestException("Every user credential is mandatory");
 
-        UserEntity createdUser = userService.createUser(userEntity);
+        User createdUser = userService.createUser(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     @PutMapping("admin/{id}")
-    public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @RequestBody UserEntity userEntity) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         if(userService.findUserById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
 
-        userService.updateUser(id, userEntity);
+        userService.updateUser(id, user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

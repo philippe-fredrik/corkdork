@@ -1,14 +1,13 @@
 package se.iths.corkdork.service;
 
-import se.iths.corkdork.entity.ColorEntity;
+import org.modelmapper.ModelMapper;
+import se.iths.corkdork.dtos.Country;
 import se.iths.corkdork.entity.CountryEntity;
 import org.springframework.stereotype.Service;
-import se.iths.corkdork.entity.GrapeEntity;
 import se.iths.corkdork.repository.CountryRepository;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.awt.*;
 import java.util.Optional;
 
 @Service
@@ -16,12 +15,18 @@ public class CountryService {
 
     private final CountryRepository countryRepository;
 
-    public CountryService(CountryRepository countryRepository) {
+    private final ModelMapper modelMapper;
+
+    public CountryService(CountryRepository countryRepository, ModelMapper modelMapper) {
         this.countryRepository = countryRepository;
+        this.modelMapper = modelMapper;
     }
 
-    public CountryEntity createCountry(CountryEntity countryEntity) {
-        return countryRepository.save(countryEntity);
+    public Country createCountry(Country country) {
+
+        CountryEntity countryEntity = modelMapper.map(country, CountryEntity.class);
+
+        return modelMapper.map(countryRepository.save(countryEntity), Country.class);
     }
 
     public void deleteCountry(Long id) {
@@ -38,7 +43,7 @@ public class CountryService {
     }
 
     @Transactional
-    public void updateCountry(Long id, CountryEntity countryEntity) {
+    public void updateCountry(Long id, Country country) {
         CountryEntity foundCountry = countryRepository.findById(id).orElseThrow();
         countryRepository.save(foundCountry);
     }

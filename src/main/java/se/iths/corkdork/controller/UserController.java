@@ -1,6 +1,7 @@
 package se.iths.corkdork.controller;
 
 import org.jetbrains.annotations.NotNull;
+import org.modelmapper.ModelMapper;
 import se.iths.corkdork.dtos.User;
 import se.iths.corkdork.entity.UserEntity;
 import org.springframework.http.HttpStatus;
@@ -16,34 +17,38 @@ import java.util.Optional;
 @RequestMapping("users")
 public class UserController {
 
-    UserService userService;
+    private final UserService userService;
+    private final ModelMapper modelMapper;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
+        this.modelMapper = modelMapper;
     }
 
     @PostMapping("signup")
-    public ResponseEntity<User> createUser(@RequestBody User user){
-        if(user.getFirstName().isEmpty() || user.getLastName().isEmpty() || user.getUserName().isEmpty()
-        || user.getPassword().isEmpty() || user.getEmail().isEmpty())
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        if (user.getFirstName().isEmpty() || user.getLastName().isEmpty() || user.getUsername().isEmpty()
+                || user.getPassword().isEmpty() || user.getEmail().isEmpty())
             throw new BadRequestException("Every user credential is mandatory");
 
-        User createdUser = userService.createUser(user);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+        UserEntity createdUser = userService.createUser(modelMapper.map(user, UserEntity.class));
+        User response = modelMapper.map(createdUser, User.class);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping("admin/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
-        if(userService.findUserById(id).isEmpty())
+        if (userService.findUserById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
 
-        userService.updateUser(id, user);
-        return new ResponseEntity<>(HttpStatus.OK);
+        UserEntity updatedUser = userService.updateUser(id, modelMapper.map(user, UserEntity.class));
+        User response = modelMapper.map(updatedUser, User.class);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("admin/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id){
-        if(userService.findUserById(id).isEmpty())
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        if (userService.findUserById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
 
         userService.deleteUser(id);
@@ -51,18 +56,22 @@ public class UserController {
     }
 
     @GetMapping("public/{id}")
-    public ResponseEntity<Optional<UserEntity>> findUserById(@PathVariable Long id){
-        if(userService.findUserById(id).isEmpty())
-            throw new EntityNotFoundException(notFound(id));
-
+    public ResponseEntity<User> findUserById(@PathVariable Long id) {
         Optional<UserEntity> foundUser = userService.findUserById(id);
-        return new ResponseEntity<>(foundUser, HttpStatus.OK);
+
+        if (foundUser.isEmpty()) {
+            throw new EntityNotFoundException(notFound(id));
+        }
+
+        User user = modelMapper.map(foundUser.get(), User.class);
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("public")
-    public ResponseEntity<Iterable<UserEntity>> findAllUsers(){
+    public ResponseEntity<Iterable<UserEntity>> findAllUsers() {
         Iterable<UserEntity> allUsers = userService.findAllUsers();
-        if(!allUsers.iterator().hasNext())
+        if (!allUsers.iterator().hasNext())
             throw new EntityNotFoundException("Failed to find any wines.");
 
         return new ResponseEntity<>(allUsers, HttpStatus.OK);

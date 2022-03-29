@@ -1,84 +1,28 @@
-2022-03-29 09:26:26,446 INFO org.springframework.boot.StartupInfoLogger [main] Starting CorkDorkApplication using Java 17.0.2 on DESKTOP-QMDKL51 with PID 18260 (C:\Users\Philippe\Documents\Java\JavaEnterprise\CorkDork\target\classes started by Philippe in C:\Users\Philippe\Documents\Java\JavaEnterprise\CorkDork)
-2022-03-29 09:26:26,465 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2022-03-29 09:26:27,880 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2022-03-29 09:26:28,015 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 119 ms. Found 6 JPA repository interfaces.
-2022-03-29 09:26:28,816 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
-2022-03-29 09:26:28,832 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
-2022-03-29 09:26:28,832 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2022-03-29 09:26:28,832 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.60]
-2022-03-29 09:26:28,985 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2022-03-29 09:26:28,985 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 2420 ms
-2022-03-29 09:26:29,202 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2022-03-29 09:26:29,271 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.7.Final
-2022-03-29 09:26:29,449 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2022-03-29 09:26:29,567 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2022-03-29 09:26:30,058 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2022-03-29 09:26:30,088 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
-2022-03-29 09:26:31,350 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2022-03-29 09:26:31,361 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2022-03-29 09:26:32,076 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will not secure any request
-2022-03-29 09:26:32,129 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2022-03-29 09:26:32,491 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8080"]
-2022-03-29 09:26:32,507 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path ''
-2022-03-29 09:26:32,523 INFO org.springframework.boot.StartupInfoLogger [main] Started CorkDorkApplication in 6.958 seconds (JVM running for 8.465)
-2022-03-29 09:27:42,118 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-03-29 09:27:42,119 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
-2022-03-29 09:27:42,121 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 2 ms
-2022-03-29 09:33:32,779 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2022-03-29 09:33:32,779 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2022-03-29 09:33:32,835 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
-2022-03-29 09:33:40,750 INFO org.springframework.boot.StartupInfoLogger [main] Starting CorkDorkApplication using Java 17.0.2 on DESKTOP-QMDKL51 with PID 18352 (C:\Users\Philippe\Documents\Java\JavaEnterprise\CorkDork\target\classes started by Philippe in C:\Users\Philippe\Documents\Java\JavaEnterprise\CorkDork)
-2022-03-29 09:33:40,750 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2022-03-29 09:33:41,615 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2022-03-29 09:33:41,684 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 63 ms. Found 6 JPA repository interfaces.
-2022-03-29 09:33:42,248 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
-2022-03-29 09:33:42,264 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
-2022-03-29 09:33:42,264 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2022-03-29 09:33:42,264 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.60]
-2022-03-29 09:33:42,401 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2022-03-29 09:33:42,401 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1572 ms
-2022-03-29 09:33:42,602 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2022-03-29 09:33:42,671 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.7.Final
-2022-03-29 09:33:42,849 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2022-03-29 09:33:43,150 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2022-03-29 09:33:43,544 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2022-03-29 09:33:43,568 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
-2022-03-29 09:33:44,604 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2022-03-29 09:33:44,614 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2022-03-29 09:33:45,207 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will not secure any request
-2022-03-29 09:33:45,238 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2022-03-29 09:33:45,577 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8080"]
-2022-03-29 09:33:45,609 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path ''
-2022-03-29 09:33:45,609 INFO org.springframework.boot.StartupInfoLogger [main] Started CorkDorkApplication in 5.63 seconds (JVM running for 6.983)
-2022-03-29 09:33:53,224 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-03-29 09:33:53,225 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
-2022-03-29 09:33:53,226 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 1 ms
-2022-03-29 09:36:59,390 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2022-03-29 09:36:59,390 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2022-03-29 09:36:59,425 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
-2022-03-29 09:37:08,449 INFO org.springframework.boot.StartupInfoLogger [main] Starting CorkDorkApplication using Java 17.0.2 on DESKTOP-QMDKL51 with PID 6668 (C:\Users\Philippe\Documents\Java\JavaEnterprise\CorkDork\target\classes started by Philippe in C:\Users\Philippe\Documents\Java\JavaEnterprise\CorkDork)
-2022-03-29 09:37:08,470 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2022-03-29 09:37:09,386 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2022-03-29 09:37:09,464 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 68 ms. Found 6 JPA repository interfaces.
-2022-03-29 09:37:10,201 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
-2022-03-29 09:37:10,209 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
-2022-03-29 09:37:10,209 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2022-03-29 09:37:10,209 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.60]
-2022-03-29 09:37:10,325 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2022-03-29 09:37:10,325 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1768 ms
-2022-03-29 09:37:10,556 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2022-03-29 09:37:10,603 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.7.Final
-2022-03-29 09:37:10,733 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2022-03-29 09:37:10,825 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2022-03-29 09:37:11,153 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2022-03-29 09:37:11,160 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
-2022-03-29 09:37:12,186 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2022-03-29 09:37:12,195 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2022-03-29 09:37:12,826 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will not secure any request
-2022-03-29 09:37:12,851 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2022-03-29 09:37:13,213 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8080"]
-2022-03-29 09:37:13,229 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path ''
-2022-03-29 09:37:13,245 INFO org.springframework.boot.StartupInfoLogger [main] Started CorkDorkApplication in 5.779 seconds (JVM running for 7.86)
-2022-03-29 09:37:15,156 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-03-29 09:37:15,157 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
-2022-03-29 09:37:15,159 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 2 ms
+2022-03-19 17:17:06,606 INFO org.springframework.boot.StartupInfoLogger [main] Starting CorkDorkApplication using Java 17.0.2 on DESKTOP-M5MIBBQ with PID 22768 (D:\IntellijProjects\corkdork\target\classes started by Fredrik in D:\IntellijProjects\corkdork)
+2022-03-19 17:17:06,609 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-03-19 17:17:06,983 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-03-19 17:17:07,022 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 32 ms. Found 6 JPA repository interfaces.
+2022-03-19 17:17:07,303 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2022-03-19 17:17:07,308 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
+2022-03-19 17:17:07,309 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2022-03-19 17:17:07,309 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-03-19 17:17:07,362 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2022-03-19 17:17:07,362 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 721 ms
+2022-03-19 17:17:07,475 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-03-19 17:17:07,503 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.5.Final
+2022-03-19 17:17:07,576 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-03-19 17:17:07,631 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2022-03-19 17:17:07,820 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2022-03-19 17:17:07,833 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2022-03-19 17:17:08,298 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-03-19 17:17:08,303 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-03-19 17:17:08,481 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-03-19 17:17:08,690 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8080"]
+2022-03-19 17:17:08,704 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path ''
+2022-03-19 17:17:08,711 INFO org.springframework.boot.StartupInfoLogger [main] Started CorkDorkApplication in 2.441 seconds (JVM running for 2.931)
+2022-03-19 17:17:12,952 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-03-19 17:17:12,952 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2022-03-19 17:17:12,953 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 1 ms
+2022-03-19 17:17:12,965 INFO se.iths.corkdork.logger.LoggingController [http-nio-8080-exec-1] A INFO Message
+2022-03-19 17:17:12,965 WARN se.iths.corkdork.logger.LoggingController [http-nio-8080-exec-1] A WARN Message
+2022-03-19 17:17:12,965 ERROR se.iths.corkdork.logger.LoggingController [http-nio-8080-exec-1] A ERROR Message

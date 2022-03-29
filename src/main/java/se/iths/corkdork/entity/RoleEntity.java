@@ -1,22 +1,21 @@
 package se.iths.corkdork.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
-
-
 @Entity
 public class RoleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(nullable = false)
     private String role;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<UserEntity> users;
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL, mappedBy = "role")
+    private Set<UserEntity> users = new HashSet<>();
 
     public RoleEntity(String role) {
         this.role = role;
@@ -27,6 +26,10 @@ public class RoleEntity {
 
     public Long getId() {
         return id;
+    }
+
+    public void addUser(UserEntity user) {
+        users.add(user);
     }
 
     public void setId(Long id) {
@@ -49,6 +52,4 @@ public class RoleEntity {
     public void setUsers(Set<UserEntity> users) {
         this.users = users;
     }
-
-
 }

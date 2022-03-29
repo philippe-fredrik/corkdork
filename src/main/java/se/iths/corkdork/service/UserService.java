@@ -1,32 +1,35 @@
 package se.iths.corkdork.service;
 
-import org.modelmapper.ModelMapper;
-import se.iths.corkdork.dtos.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import se.iths.corkdork.entity.RoleEntity;
 import se.iths.corkdork.entity.UserEntity;
 import org.springframework.stereotype.Service;
+import se.iths.corkdork.repository.RoleRepository;
 import se.iths.corkdork.repository.UserRepository;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    private final ModelMapper modelMapper;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper) {
+    public UserService(UserRepository userRepository,RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public User createUser(User user) {
+    public UserEntity createUser(UserEntity userEntity) {
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        RoleEntity roleToAdd = roleRepository.findByRole("USER");
+        userEntity.setRole(roleToAdd);
 
-        UserEntity userEntity = modelMapper.map(user, UserEntity.class);
-
-        return modelMapper.map(userRepository.save(userEntity), User.class);
+        return userRepository.save(userEntity);
     }
 
     public void deleteUser(Long id) {
@@ -42,9 +45,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    @Transactional
-    public void updateUser(Long id, User user) {
-        UserEntity foundUser = userRepository.findById(id).orElseThrow();
-        userRepository.save(foundUser);
+    public UserEntity updateUser(Long id, UserEntity userEntity) {
+        userEntity.setId(id);
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        userRepository.save(userEntity);
+        return userEntity;
     }
 }

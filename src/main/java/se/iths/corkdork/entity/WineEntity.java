@@ -43,6 +43,7 @@ public class WineEntity {
         this.country = country;
     }
 
+    @JsonIgnore
     public GrapeEntity getGrape() {
         return grape;
     }

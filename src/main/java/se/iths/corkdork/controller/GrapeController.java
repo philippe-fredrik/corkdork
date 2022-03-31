@@ -22,7 +22,7 @@ public class GrapeController {
         this.grapeService = grapeService;
     }
 
-    @PostMapping
+    @PostMapping("/admin/create")
     public ResponseEntity<Grape> createGrape(@RequestBody Grape grape) {
         if(grape.getName().isEmpty() || grape.getColor().isEmpty())
             throw new BadRequestException("Name and color fields are mandatory");

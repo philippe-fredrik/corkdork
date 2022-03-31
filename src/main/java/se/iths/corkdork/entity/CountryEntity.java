@@ -1,5 +1,7 @@
 package se.iths.corkdork.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -49,6 +51,7 @@ public class CountryEntity {
         this.name = name;
     }
 
+    @JsonIgnore
     public Set<WineEntity> getWines() {
         return wines;
     }
@@ -56,7 +59,7 @@ public class CountryEntity {
     public void setWines(Set<WineEntity> wines) {
         this.wines = wines;
     }
-
+    @JsonIgnore
     public Set<GrapeEntity> getGrapes() {
         return grapes;
     }

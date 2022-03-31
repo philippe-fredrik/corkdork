@@ -1,6 +1,5 @@
 package se.iths.corkdork.controller;
 
-import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import se.iths.corkdork.dtos.User;
@@ -34,6 +33,7 @@ public class UserController {
 
         UserEntity createdUser = userService.createUser(modelMapper.map(user, UserEntity.class));
         User response = modelMapper.map(createdUser, User.class);
+
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -44,6 +44,7 @@ public class UserController {
 
         UserEntity updatedUser = userService.updateUser(id, modelMapper.map(user, UserEntity.class));
         User response = modelMapper.map(updatedUser, User.class);
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -84,7 +85,6 @@ public class UserController {
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
 
-    @NotNull
     private String notFound(Long id) {
         return "User with ID: " + id + " was not found.";
     }

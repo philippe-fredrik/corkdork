@@ -1,6 +1,5 @@
 package se.iths.corkdork.service;
 
-import org.modelmapper.ModelMapper;
 import se.iths.corkdork.dtos.Country;
 import se.iths.corkdork.entity.CountryEntity;
 import org.springframework.stereotype.Service;
@@ -15,18 +14,13 @@ public class CountryService {
 
     private final CountryRepository countryRepository;
 
-    private final ModelMapper modelMapper;
 
-    public CountryService(CountryRepository countryRepository, ModelMapper modelMapper) {
+    public CountryService(CountryRepository countryRepository) {
         this.countryRepository = countryRepository;
-        this.modelMapper = modelMapper;
     }
 
-    public Country createCountry(Country country) {
-
-        CountryEntity countryEntity = modelMapper.map(country, CountryEntity.class);
-
-        return modelMapper.map(countryRepository.save(countryEntity), Country.class);
+    public CountryEntity createCountry(CountryEntity countryEntity) {
+        return countryRepository.save(countryEntity);
     }
 
     public void deleteCountry(Long id) {

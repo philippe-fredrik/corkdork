@@ -69,6 +69,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @GetMapping("public")
     public ResponseEntity<Iterable<User>> findAllUsers() {
         Iterable<UserEntity> allUserEntities = userService.findAllUsers();
         if (!allUserEntities.iterator().hasNext())

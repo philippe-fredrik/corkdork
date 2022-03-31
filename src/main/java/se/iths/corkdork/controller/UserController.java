@@ -1,6 +1,5 @@
 package se.iths.corkdork.controller;
 
-import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import se.iths.corkdork.dtos.User;
@@ -24,6 +23,18 @@ public class UserController {
     public UserController(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+    }
+
+    @PostMapping("signup")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        if (user.getFirstName().isEmpty() || user.getLastName().isEmpty() || user.getUsername().isEmpty()
+                || user.getPassword().isEmpty() || user.getEmail().isEmpty())
+            throw new BadRequestException("Every user credential is mandatory");
+
+        UserEntity createdUser = userService.createUser(modelMapper.map(user, UserEntity.class));
+        User response = modelMapper.map(createdUser, User.class);
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping("admin/{id}")
@@ -75,17 +86,14 @@ public class UserController {
         Iterable<UserEntity> allUserEntities = userService.findAllUsers();
         if (!allUserEntities.iterator().hasNext())
             throw new EntityNotFoundException("Failed to find any wines.");
-
-
+      
         Iterable<User> allUsers = modelMapper.map(allUserEntities, new TypeToken<Iterable<User>>() {
         }.getType());
-
 
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
 
     }
 
-    @NotNull
     private String notFound(Long id) {
         return "User with ID: " + id + " was not found.";
     }

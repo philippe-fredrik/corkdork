@@ -18,9 +18,6 @@ public class WineEntity {
     @ManyToOne
     private GrapeEntity grape;
 
-    @OneToOne
-    ColorEntity color;
-
     public Long getId() {
         return id;
     }
@@ -46,19 +43,12 @@ public class WineEntity {
         this.country = country;
     }
 
+    @JsonIgnore
     public GrapeEntity getGrape() {
         return grape;
     }
 
     public void setGrape(GrapeEntity grape) {
         this.grape = grape;
-    }
-
-    public ColorEntity getColor() {
-        return color;
-    }
-
-    public void setColor(ColorEntity color) {
-        this.color = color;
     }
 }

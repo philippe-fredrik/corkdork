@@ -1,6 +1,8 @@
 package se.iths.corkdork.controller;
 
 import org.jetbrains.annotations.NotNull;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import se.iths.corkdork.dtos.Wine;
 import se.iths.corkdork.entity.WineEntity;
 import org.springframework.http.HttpStatus;
@@ -12,66 +14,76 @@ import se.iths.corkdork.service.WineService;
 
 import java.util.Optional;
 
-import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("wines")
 public class WineController {
 
-    WineService wineService;
+    private final WineService wineService;
+    private final ModelMapper modelMapper;
 
-    public WineController(WineService wineService){
+    public WineController(WineService wineService, ModelMapper modelMapper) {
         this.wineService = wineService;
+        this.modelMapper = modelMapper;
     }
 
     @PostMapping("admin/create")
-    public ResponseEntity<Wine> createWine(@RequestBody Wine wine){
-        if(wine.getName().isEmpty())
+    public ResponseEntity<Wine> createWine(@RequestBody Wine wine) {
+        if (wine.getName().isEmpty())
             throw new BadRequestException("Name cannot be empty.");
 
-        Wine createdWine = wineService.createWine(wine);
-        return new ResponseEntity<>(createdWine, HttpStatus.CREATED);
+        WineEntity createdWine = wineService.createWine(modelMapper.map(wine, WineEntity.class));
+        Wine response = modelMapper.map(createdWine, Wine.class);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PatchMapping("{id}")
-    public ResponseEntity<Wine> updateWineName(@PathVariable Long id, @RequestBody String name) {
-        return new ResponseEntity<>(wineService.updateWineName(id, name), OK);
-    }
 
     @PutMapping("admin/{id}")
-    public ResponseEntity<Object> updateWine(@PathVariable Long id, @RequestBody Wine wine) {
-        if(wineService.findWineById(id).isEmpty())
+    public ResponseEntity<Wine> updateWine(@PathVariable Long id, @RequestBody Wine wine) {
+        if (wineService.findWineById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
 
-        wineService.updateWine(id, wine);
-        return new ResponseEntity<>(HttpStatus.OK);
+        WineEntity updatedWine = wineService.updateWine(id, modelMapper.map(wine, WineEntity.class));
+        Wine response = modelMapper.map(updatedWine, Wine.class);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping({"admin/{id}"})
-    public ResponseEntity<Void> deleteWine(@PathVariable Long id){
-        if(wineService.findWineById(id).isEmpty())
+    public ResponseEntity<Void> deleteWine(@PathVariable Long id) {
+        if (wineService.findWineById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
 
         wineService.deleteWine(id);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("public/{id}")
-    public ResponseEntity<Optional<WineEntity>> findWineById(@PathVariable Long id) {
-        if(wineService.findWineById(id).isEmpty())
-            throw new EntityNotFoundException(notFound(id));
-
+    public ResponseEntity<Wine> findWineById(@PathVariable Long id) {
         Optional<WineEntity> foundWine = wineService.findWineById(id);
-        return new ResponseEntity<>(foundWine, OK);
+
+        if (foundWine.isEmpty()) {
+            throw new EntityNotFoundException(notFound(id));
+        }
+
+        Wine wine = modelMapper.map(foundWine.get(), Wine.class);
+
+        return new ResponseEntity<>(wine, HttpStatus.OK);
     }
 
     @GetMapping("public")
-    public ResponseEntity<Iterable<WineEntity>> findAllWines(){
-        Iterable<WineEntity> allWines = wineService.findAllWines();
-        if(!allWines.iterator().hasNext())
+    public ResponseEntity<Iterable<Wine>> findAllWines() {
+        Iterable<WineEntity> allWinesEntities = wineService.findAllWines();
+
+        if (!allWinesEntities.iterator().hasNext())
             throw new EntityNotFoundException("Failed to find any wines.");
 
-        return new ResponseEntity<>(allWines, OK);
+        Iterable<Wine> allWines = modelMapper.map(
+                allWinesEntities,
+                new TypeToken<Iterable<Wine>>() {
+                }.getType());
+
+        return new ResponseEntity<>(allWines, HttpStatus.OK);
     }
 
     @NotNull

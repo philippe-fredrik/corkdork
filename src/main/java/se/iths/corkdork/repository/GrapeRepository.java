@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GrapeRepository extends CrudRepository<GrapeEntity, Long> {
-
+    GrapeEntity findByName(String name);
 }

@@ -1,12 +1,10 @@
 package se.iths.corkdork.service;
 
-import org.modelmapper.ModelMapper;
-import se.iths.corkdork.dtos.Grape;
+
 import se.iths.corkdork.entity.GrapeEntity;
 import org.springframework.stereotype.Service;
 import se.iths.corkdork.repository.GrapeRepository;
-
-import javax.transaction.Transactional;
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -14,18 +12,13 @@ public class GrapeService {
 
     private final GrapeRepository grapeRepository;
 
-    private final ModelMapper modelMapper;
 
-    public GrapeService(GrapeRepository grapeRepository, ModelMapper modelMapper) {
+    public GrapeService(GrapeRepository grapeRepository) {
         this.grapeRepository = grapeRepository;
-        this.modelMapper = modelMapper;
     }
 
-    public Grape createGrape(Grape grape) {
-
-        GrapeEntity grapeEntity = modelMapper.map(grape, GrapeEntity.class);
-
-        return modelMapper.map(grapeRepository.save(grapeEntity), Grape.class);
+    public GrapeEntity createGrape(GrapeEntity grapeEntity) {
+        return grapeRepository.save(grapeEntity);
     }
 
     public Optional<GrapeEntity> findById(Long id) {
@@ -37,12 +30,13 @@ public class GrapeService {
    }
 
    public void deleteGrape(Long id) {
-        grapeRepository.deleteById(id);
+        GrapeEntity foundGrape = grapeRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        grapeRepository.deleteById(foundGrape.getId());
    }
 
-    @Transactional
-    public void updateGrape(Long id, Grape grape) {
-        GrapeEntity foundGrape = grapeRepository.findById(id).orElseThrow();
-        grapeRepository.save(foundGrape);
+    public GrapeEntity updateGrape(Long id, GrapeEntity grapeEntity) {
+        grapeEntity.setId(id);
+        grapeRepository.save(grapeEntity);
+        return grapeEntity;
     }
 }

@@ -25,18 +25,6 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
-    @PostMapping("signup")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        if (user.getFirstName().isEmpty() || user.getLastName().isEmpty() || user.getUsername().isEmpty()
-                || user.getPassword().isEmpty() || user.getEmail().isEmpty())
-            throw new BadRequestException("Every user credential is mandatory");
-
-        UserEntity createdUser = userService.createUser(modelMapper.map(user, UserEntity.class));
-        User response = modelMapper.map(createdUser, User.class);
-
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
     @PutMapping("admin/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         if (userService.findUserById(id).isEmpty())

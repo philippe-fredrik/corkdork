@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import se.iths.corkdork.repository.WineRepository;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -23,12 +22,9 @@ public class WineService {
         return wineRepository.save(wineEntity);
     }
 
-
-    @Transactional
     public WineEntity updateWine(Long id, WineEntity wineEntity) {
-        WineEntity foundWine = wineRepository.findById(id).orElseThrow();
-
-        return wineRepository.save(foundWine);
+        wineEntity.setId(id);
+        return wineRepository.save(wineEntity);
     }
 
     public void deleteWine(Long id){

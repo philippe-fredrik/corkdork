@@ -54,6 +54,7 @@ public class WineController {
             throw new EntityNotFoundException(notFound(id));
 
         wineService.deleteWine(id);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -73,6 +74,7 @@ public class WineController {
     @GetMapping("public")
     public ResponseEntity<Iterable<Wine>> findAllWines() {
         Iterable<WineEntity> allWinesEntities = wineService.findAllWines();
+
         if (!allWinesEntities.iterator().hasNext())
             throw new EntityNotFoundException("Failed to find any wines.");
 

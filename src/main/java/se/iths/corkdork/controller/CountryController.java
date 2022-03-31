@@ -1,5 +1,7 @@
 package se.iths.corkdork.controller;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import se.iths.corkdork.dtos.Country;
 import se.iths.corkdork.entity.CountryEntity;
 import org.springframework.http.HttpStatus;
@@ -15,31 +17,37 @@ import java.util.Optional;
 @RequestMapping("countries")
 public class CountryController {
 
-    CountryService countryService;
+    private final CountryService countryService;
+    private final ModelMapper modelMapper;
 
-    public CountryController(CountryService countryService) {
+    public CountryController(CountryService countryService, ModelMapper modelMapper) {
         this.countryService = countryService;
+        this.modelMapper = modelMapper;
     }
 
-    @PostMapping
+    @PostMapping("/admin/create")
     public ResponseEntity<Country> createCountry(@RequestBody Country country){
         if(country.getName().isEmpty())
             throw new BadRequestException("Name field is mandatory");
 
-        Country createdCountry = countryService.createCountry(country);
-        return new ResponseEntity<>(createdCountry, HttpStatus.CREATED);
+        CountryEntity countryEntity = countryService.createCountry(modelMapper.map(country, CountryEntity.class));
+        Country response = modelMapper.map(countryEntity, Country.class);
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("admin/{id}")
     public ResponseEntity<Country> updateCountry(@PathVariable Long id, @RequestBody Country country){
         if(countryService.findCountryById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
 
-        countryService.updateCountry(id, country);
-        return new ResponseEntity<>(HttpStatus.OK);
+        CountryEntity countryEntity = countryService.createCountry(modelMapper.map(country, CountryEntity.class));
+        Country response = modelMapper.map(countryEntity, Country.class);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("admin/{id}")
     public ResponseEntity<Void> deleteCountry(@PathVariable Long id){
         if(countryService.findCountryById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
@@ -49,20 +57,32 @@ public class CountryController {
 
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Optional<CountryEntity>> findCountryById(@PathVariable Long id){
-        if(countryService.findCountryById(id).isEmpty())
-            throw new EntityNotFoundException(notFound(id));
-
+    @GetMapping("public/{id}")
+    public ResponseEntity<Country> findCountryById(@PathVariable Long id){
         Optional<CountryEntity> foundCountry = countryService.findCountryById(id);
-        return new ResponseEntity<>(foundCountry, HttpStatus.OK);
+
+        if(foundCountry.isEmpty()) {
+            throw new EntityNotFoundException(notFound(id));
+        }
+
+        Country country = modelMapper.map(foundCountry.get(), Country.class);
+
+        return new ResponseEntity<>(country, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<Iterable<CountryEntity>> findAllCountries(){
-        Iterable<CountryEntity> allCountries = countryService.findAllCountries();
-        if(!allCountries.iterator().hasNext())
+    @GetMapping("public")
+    public ResponseEntity<Iterable<Country>> findAllCountries(){
+        Iterable<CountryEntity> allCountrieEntities = countryService.findAllCountries();
+
+        if(!allCountrieEntities.iterator().hasNext())
             throw new EntityNotFoundException("Failed to find any wines.");
+
+        Iterable<Country> allCountries = modelMapper.map(
+                allCountrieEntities,
+                new TypeToken<Iterable<Country>>() {
+                }.getType());
+
+
         return new ResponseEntity<>(allCountries, HttpStatus.OK);
     }
 

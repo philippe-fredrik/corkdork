@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final String[] urls = {"/users/**", "/users/signup","/wines/**", "/roles", "/countries", "/grapes"};
+    private final String[] urls = {"/users/**", "/users/signup","/wines/**", "/roles", "/countries/**", "/grapes/**"};
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {

@@ -25,18 +25,6 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
-    @PostMapping("signup")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        if (user.getFirstName().isEmpty() || user.getLastName().isEmpty() || user.getUsername().isEmpty()
-                || user.getPassword().isEmpty() || user.getEmail().isEmpty())
-            throw new BadRequestException("Every user credential is mandatory");
-
-        UserEntity createdUser = userService.createUser(modelMapper.map(user, UserEntity.class));
-        User response = modelMapper.map(createdUser, User.class);
-
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
     @PutMapping("admin/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         if (userService.findUserById(id).isEmpty())
@@ -70,19 +58,28 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @PostMapping("signup")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        if (user.getFirstName().isEmpty() || user.getLastName().isEmpty() || user.getUsername().isEmpty()
+                || user.getPassword().isEmpty() || user.getEmail().isEmpty())
+            throw new BadRequestException("Every user credential is mandatory");
+
+        UserEntity createdUser = userService.createUser(modelMapper.map(user, UserEntity.class));
+        User response = modelMapper.map(createdUser, User.class);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
     @GetMapping("public")
     public ResponseEntity<Iterable<User>> findAllUsers() {
         Iterable<UserEntity> allUserEntities = userService.findAllUsers();
         if (!allUserEntities.iterator().hasNext())
             throw new EntityNotFoundException("Failed to find any wines.");
-
-        Iterable<User> allUsers = modelMapper.map(
-                allUserEntities,
-                new TypeToken<Iterable<User>>() {
-                }.getType());
-
+      
+        Iterable<User> allUsers = modelMapper.map(allUserEntities, new TypeToken<Iterable<User>>() {
+        }.getType());
 
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
+
     }
 
     private String notFound(Long id) {

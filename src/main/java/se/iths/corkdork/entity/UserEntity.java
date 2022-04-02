@@ -1,10 +1,6 @@
 package se.iths.corkdork.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 
 @Entity
 public class UserEntity {
@@ -13,15 +9,10 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
     private String firstName;
-    @Column(nullable = false)
     private String lastName;
-    @Column(nullable = false, unique = true)
     private String username;
-    @Column(nullable = false)
     private String password;
-    @Column(nullable = false, unique = true)
     private String email;
 
     @ManyToOne(fetch = FetchType.EAGER)

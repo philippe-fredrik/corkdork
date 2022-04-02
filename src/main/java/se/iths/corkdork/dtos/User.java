@@ -1,7 +1,7 @@
 package se.iths.corkdork.dtos;
 
 import se.iths.corkdork.validator.UniqueEmail;
-
+import se.iths.corkdork.validator.UniqueUser;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -16,6 +16,7 @@ public class User {
     @NotBlank
     private String password;
     @NotBlank
+    @UniqueUser
     private String username;
     @NotBlank
     @UniqueEmail

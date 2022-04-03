@@ -7,10 +7,10 @@ import se.iths.corkdork.entity.UserEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.UserService;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -59,10 +59,7 @@ public class UserController {
     }
 
     @PostMapping("signup")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        if (user.getFirstName().isEmpty() || user.getLastName().isEmpty() || user.getUsername().isEmpty()
-                || user.getPassword().isEmpty() || user.getEmail().isEmpty())
-            throw new BadRequestException("Every user credential is mandatory");
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
 
         UserEntity createdUser = userService.createUser(modelMapper.map(user, UserEntity.class));
         User response = modelMapper.map(createdUser, User.class);

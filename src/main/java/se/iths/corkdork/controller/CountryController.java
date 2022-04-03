@@ -11,6 +11,7 @@ import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.CountryService;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -26,7 +27,7 @@ public class CountryController {
     }
 
     @PostMapping("/admin/create")
-    public ResponseEntity<Country> createCountry(@RequestBody Country country){
+    public ResponseEntity<Country> createCountry(@Valid @RequestBody Country country){
         if(country.getName().isEmpty())
             throw new BadRequestException("Name field is mandatory");
 

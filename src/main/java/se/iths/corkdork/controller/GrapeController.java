@@ -12,6 +12,7 @@ import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.GrapeService;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -27,7 +28,7 @@ public class GrapeController {
     }
 
     @PostMapping("/admin/create")
-    public ResponseEntity<Grape> createGrape(@RequestBody Grape grape) {
+    public ResponseEntity<Grape> createGrape(@Valid @RequestBody Grape grape) {
         if(grape.getName().isEmpty() || grape.getColor().isEmpty())
             throw new BadRequestException("Name and color fields are mandatory");
 

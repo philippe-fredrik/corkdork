@@ -1,8 +1,11 @@
 package se.iths.corkdork.dtos;
 
+import javax.validation.constraints.NotBlank;
+
 public class Country {
 
     private Long id;
+    @NotBlank
     private String name;
 
     public Long getId() {

@@ -12,6 +12,7 @@ import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.WineService;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 
@@ -28,7 +29,7 @@ public class WineController {
     }
 
     @PostMapping("admin/create")
-    public ResponseEntity<Wine> createWine(@RequestBody Wine wine) {
+    public ResponseEntity<Wine> createWine(@Valid @RequestBody Wine wine) {
         if (wine.getName().isEmpty())
             throw new BadRequestException("Name cannot be empty.");
 

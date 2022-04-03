@@ -5,7 +5,6 @@ import se.iths.corkdork.validator.UniqueUser;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-
 public class User {
 
     private Long id;

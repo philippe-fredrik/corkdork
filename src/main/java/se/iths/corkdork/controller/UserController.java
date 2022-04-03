@@ -55,7 +55,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-  
+
     @GetMapping("")
     public ResponseEntity<Iterable<User>> findAllUsers() {
 

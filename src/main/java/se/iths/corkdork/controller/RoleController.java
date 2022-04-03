@@ -29,6 +29,7 @@ public class RoleController {
         if (errors.hasErrors())
             throw new BadRequestException("Role field is mandatory", errors);
 
+        roleService.createRole(roleEntity);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

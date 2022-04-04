@@ -7,10 +7,10 @@ import se.iths.corkdork.entity.UserEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.UserService;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -69,6 +69,14 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @PostMapping("signup")
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+
+        UserEntity createdUser = userService.createUser(modelMapper.map(user, UserEntity.class));
+        User response = modelMapper.map(createdUser, User.class);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+  
     @GetMapping("")
     public ResponseEntity<Iterable<User>> findAllUsers() {
         Iterable<UserEntity> allUserEntities = userService.findAllUsers();

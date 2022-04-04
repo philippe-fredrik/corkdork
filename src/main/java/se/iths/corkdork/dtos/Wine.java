@@ -1,11 +1,15 @@
 package se.iths.corkdork.dtos;
 
+import javax.validation.constraints.NotBlank;
 
 public class Wine {
 
     private Long id;
+    @NotBlank(message = "name cannot be empty.")
     private String name;
+    @NotBlank
     private Country country;
+    @NotBlank
     private Grape grape;
 
     public Long getId() {

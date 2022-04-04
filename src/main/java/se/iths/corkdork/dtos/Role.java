@@ -1,7 +1,5 @@
 package se.iths.corkdork.dtos;
 
-
-
 public class Role {
     private Long id;
     private String role;

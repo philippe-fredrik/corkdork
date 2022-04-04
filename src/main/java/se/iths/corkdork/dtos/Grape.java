@@ -1,9 +1,13 @@
 package se.iths.corkdork.dtos;
 
+import javax.validation.constraints.NotBlank;
+
 public class Grape {
 
     private Long id;
+    @NotBlank
     private String name;
+    @NotBlank
     private String color;
 
     public Long getId() {

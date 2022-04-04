@@ -12,6 +12,7 @@ import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.WineService;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 

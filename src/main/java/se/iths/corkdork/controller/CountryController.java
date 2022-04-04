@@ -7,9 +7,11 @@ import se.iths.corkdork.entity.CountryEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import se.iths.corkdork.entity.WineEntity;
 import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.CountryService;
+import se.iths.corkdork.service.WineService;
 
 import java.util.Optional;
 
@@ -19,13 +21,15 @@ public class CountryController {
 
     private final CountryService countryService;
     private final ModelMapper modelMapper;
+    private final WineService wineService;
 
-    public CountryController(CountryService countryService, ModelMapper modelMapper) {
+    public CountryController(CountryService countryService, ModelMapper modelMapper, WineService wineService) {
         this.countryService = countryService;
         this.modelMapper = modelMapper;
+        this.wineService = wineService;
     }
 
-    @PostMapping("/admin/create")
+    @PostMapping("")
     public ResponseEntity<Country> createCountry(@RequestBody Country country){
         if(country.getName().isEmpty())
             throw new BadRequestException("Name field is mandatory");
@@ -36,7 +40,7 @@ public class CountryController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("admin/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Country> updateCountry(@PathVariable Long id, @RequestBody Country country){
         if(countryService.findCountryById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
@@ -47,7 +51,7 @@ public class CountryController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("admin/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteCountry(@PathVariable Long id){
         if(countryService.findCountryById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
@@ -57,7 +61,7 @@ public class CountryController {
 
     }
 
-    @GetMapping("public/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<Country> findCountryById(@PathVariable Long id){
         Optional<CountryEntity> foundCountry = countryService.findCountryById(id);
 
@@ -70,15 +74,14 @@ public class CountryController {
         return new ResponseEntity<>(country, HttpStatus.OK);
     }
 
-    @GetMapping("public")
+    @GetMapping()
     public ResponseEntity<Iterable<Country>> findAllCountries(){
-        Iterable<CountryEntity> allCountrieEntities = countryService.findAllCountries();
+        Iterable<CountryEntity> allCountriesEntity = countryService.findAllCountries();
 
-        if(!allCountrieEntities.iterator().hasNext())
-            throw new EntityNotFoundException("Failed to find any wines.");
+        if(!allCountriesEntity.iterator().hasNext())
+            throw new EntityNotFoundException("Failed to find any countries.");
 
-        Iterable<Country> allCountries = modelMapper.map(
-                allCountrieEntities,
+        Iterable<Country> allCountries = modelMapper.map(allCountriesEntity,
                 new TypeToken<Iterable<Country>>() {
                 }.getType());
 

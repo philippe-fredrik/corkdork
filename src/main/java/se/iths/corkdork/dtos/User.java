@@ -1,5 +1,7 @@
 package se.iths.corkdork.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import se.iths.corkdork.validator.UniqueEmail;
 import se.iths.corkdork.validator.UniqueUser;
 import javax.validation.constraints.Email;
@@ -75,10 +77,12 @@ public class User {
         this.username = username;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }

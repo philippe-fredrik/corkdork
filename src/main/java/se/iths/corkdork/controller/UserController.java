@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.UserService;
-
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -66,8 +65,8 @@ public class UserController {
         if (errors.hasErrors())
             throw new BadRequestException("Invalid input", errors);
 
-
         User createdItem = userService.createUser(user);
+
         return new ResponseEntity<>(createdItem, HttpStatus.CREATED);
     }
 

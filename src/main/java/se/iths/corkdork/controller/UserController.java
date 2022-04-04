@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.UserService;
-
+import se.iths.corkdork.exception.BadRequestException;
 import javax.validation.Valid;
 import java.util.Optional;
 

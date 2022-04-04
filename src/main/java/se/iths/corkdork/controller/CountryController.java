@@ -89,6 +89,17 @@ public class CountryController {
         return new ResponseEntity<>(allCountries, HttpStatus.OK);
     }
 
+    @PostMapping("/{name}/{id}")
+    public ResponseEntity<CountryEntity> addWineToCountry(@PathVariable String name, @PathVariable Long id) {
+        Optional<WineEntity> foundWine = wineService.findWineById(id);
+        if(foundWine.isEmpty())
+            throw new EntityNotFoundException("Wine with ID: "+id+" was not found");
+        CountryEntity updatedCountry = countryService.addWine(name, foundWine.get());
+
+        return new ResponseEntity<>(updatedCountry, HttpStatus.OK);
+    }
+
+
     private String notFound(Long id) {
         return "Country with ID: " +id+ " was not found.";
     }

@@ -63,9 +63,9 @@ public class UserController {
     @PostMapping("signup")
     public ResponseEntity<User> createUser(@Valid @RequestBody User user, BindingResult errors) {
 
-        if (errors.hasErrors()) {
-            throw new BadRequestException("Invalid input");
-        }
+        if (errors.hasErrors())
+            throw new BadRequestException("Invalid input", errors);
+
 
         User createdItem = userService.createUser(user);
         return new ResponseEntity<>(createdItem, HttpStatus.CREATED);

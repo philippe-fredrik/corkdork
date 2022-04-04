@@ -2,6 +2,7 @@ package se.iths.corkdork.controller;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.validation.BindingResult;
 import se.iths.corkdork.dtos.Country;
 import se.iths.corkdork.entity.CountryEntity;
 import org.springframework.http.HttpStatus;
@@ -27,9 +28,9 @@ public class CountryController {
     }
 
     @PostMapping("/admin/create")
-    public ResponseEntity<Country> createCountry(@Valid @RequestBody Country country){
-        if(country.getName().isEmpty())
-            throw new BadRequestException("Name field is mandatory");
+    public ResponseEntity<Country> createCountry(@Valid @RequestBody Country country, BindingResult errors){
+        if(errors.hasErrors())
+            throw new BadRequestException("Name field is mandatory", errors);
 
         CountryEntity countryEntity = countryService.createCountry(modelMapper.map(country, CountryEntity.class));
         Country response = modelMapper.map(countryEntity, Country.class);

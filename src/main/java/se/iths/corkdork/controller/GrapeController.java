@@ -3,6 +3,7 @@ package se.iths.corkdork.controller;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.validation.BindingResult;
 import se.iths.corkdork.dtos.Grape;
 import se.iths.corkdork.entity.GrapeEntity;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.GrapeService;
-
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -28,9 +28,9 @@ public class GrapeController {
     }
 
     @PostMapping("/admin/create")
-    public ResponseEntity<Grape> createGrape(@Valid @RequestBody Grape grape) {
-        if(grape.getName().isEmpty() || grape.getColor().isEmpty())
-            throw new BadRequestException("Name and color fields are mandatory");
+    public ResponseEntity<Grape> createGrape(@Valid @RequestBody Grape grape, BindingResult errors) {
+        if(errors.hasErrors())
+            throw new BadRequestException("Name and color fields are mandatory", errors);
 
         GrapeEntity createdGrape = grapeService.createGrape(modelMapper.map(grape, GrapeEntity.class));
         Grape response = modelMapper.map(createdGrape, Grape.class);

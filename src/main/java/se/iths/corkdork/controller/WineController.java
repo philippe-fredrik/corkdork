@@ -3,6 +3,7 @@ package se.iths.corkdork.controller;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.validation.BindingResult;
 import se.iths.corkdork.dtos.Wine;
 import se.iths.corkdork.entity.WineEntity;
 import org.springframework.http.HttpStatus;
@@ -29,9 +30,9 @@ public class WineController {
     }
 
     @PostMapping("admin/create")
-    public ResponseEntity<Wine> createWine(@Valid @RequestBody Wine wine) {
-        if (wine.getName().isEmpty())
-            throw new BadRequestException("Name cannot be empty.");
+    public ResponseEntity<Wine> createWine(@Valid @RequestBody Wine wine, BindingResult errors) {
+        if (errors.hasErrors())
+            throw new BadRequestException("Name cannot be empty.", errors);
 
         WineEntity createdWine = wineService.createWine(modelMapper.map(wine, WineEntity.class));
         Wine response = modelMapper.map(createdWine, Wine.class);

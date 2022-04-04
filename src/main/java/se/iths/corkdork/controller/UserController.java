@@ -68,14 +68,6 @@ public class UserController {
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
-    @PostMapping("signup")
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-
-        UserEntity createdUser = userService.createUser(modelMapper.map(user, UserEntity.class));
-        User response = modelMapper.map(createdUser, User.class);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
   
     @GetMapping("")
     public ResponseEntity<Iterable<User>> findAllUsers() {

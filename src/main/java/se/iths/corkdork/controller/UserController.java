@@ -2,11 +2,13 @@ package se.iths.corkdork.controller;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.validation.BindingResult;
 import se.iths.corkdork.dtos.User;
 import se.iths.corkdork.entity.UserEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.UserService;
 
@@ -59,11 +61,14 @@ public class UserController {
     }
 
     @PostMapping("signup")
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user, BindingResult errors) {
 
-        UserEntity createdUser = userService.createUser(modelMapper.map(user, UserEntity.class));
-        User response = modelMapper.map(createdUser, User.class);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        if (errors.hasErrors()) {
+            throw new BadRequestException("Invalid input");
+        }
+
+        User createdItem = userService.createUser(user);
+        return new ResponseEntity<>(createdItem, HttpStatus.CREATED);
     }
 
     @GetMapping("public")

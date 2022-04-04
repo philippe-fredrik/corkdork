@@ -86,6 +86,18 @@ public class GrapeController {
         return new ResponseEntity<>(allGrapes, HttpStatus.OK);
     }
 
+    @PostMapping("{name}/{id}")
+    public ResponseEntity<GrapeEntity> addCountryToGrape(@PathVariable String name, @PathVariable Long id) {
+        Optional<CountryEntity> foundCountry = countryService.findCountryById(id);
+
+        if(foundCountry.isEmpty())
+            throw new EntityNotFoundException("Country with ID: "+id+" was not found");
+
+        GrapeEntity updatedGrape = grapeService.addCountry(name, foundCountry.get());
+
+        return new ResponseEntity<>(updatedGrape, HttpStatus.OK);
+    }
+
     @NotNull
     private String notFound(Long id) {
         return "Grape with ID: " + id + " was not found.";

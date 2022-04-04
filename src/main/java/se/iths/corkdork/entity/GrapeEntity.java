@@ -21,10 +21,6 @@ public class GrapeEntity {
     @ManyToOne
     CountryEntity country;
 
-    public void addWine(WineEntity wine) {
-        wines.add(wine);
-        wine.setGrape(this);
-    }
 
     public Long getId() {
         return id;
@@ -65,6 +61,4 @@ public class GrapeEntity {
     public void setCountry(CountryEntity country) {
         this.country = country;
     }
-
-
 }

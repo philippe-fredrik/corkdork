@@ -43,11 +43,11 @@ public class CountryEntity {
         this.id = id;
     }
 
-    public String getCountryName() {
+    public String getName() {
         return name;
     }
 
-    public void setCountryName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 

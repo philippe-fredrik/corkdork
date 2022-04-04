@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.UserService;
-
+import se.iths.corkdork.exception.BadRequestException;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -25,7 +25,18 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
-    @PutMapping("admin/{id}")
+    @PostMapping("signup")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        if (user.getFirstName().isEmpty() || user.getLastName().isEmpty() || user.getUsername().isEmpty()
+                || user.getPassword().isEmpty() || user.getEmail().isEmpty())
+            throw new BadRequestException("Every user credential is mandatory");
+
+        UserEntity createdUser = userService.createUser(modelMapper.map(user, UserEntity.class));
+        User response = modelMapper.map(createdUser, User.class);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @PutMapping("{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         if (userService.findUserById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
@@ -36,7 +47,7 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("admin/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         if (userService.findUserById(id).isEmpty())
             throw new EntityNotFoundException(notFound(id));
@@ -45,7 +56,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("public/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<User> findUserById(@PathVariable Long id) {
         Optional<UserEntity> foundUser = userService.findUserById(id);
 
@@ -57,16 +68,8 @@ public class UserController {
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
-    @PostMapping("signup")
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-
-        UserEntity createdUser = userService.createUser(modelMapper.map(user, UserEntity.class));
-        User response = modelMapper.map(createdUser, User.class);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
-    @GetMapping("public")
+  
+    @GetMapping("")
     public ResponseEntity<Iterable<User>> findAllUsers() {
         Iterable<UserEntity> allUserEntities = userService.findAllUsers();
         if (!allUserEntities.iterator().hasNext())

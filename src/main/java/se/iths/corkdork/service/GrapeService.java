@@ -2,6 +2,7 @@ package se.iths.corkdork.service;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import se.iths.corkdork.dtos.Country;
 import se.iths.corkdork.dtos.Grape;
 import se.iths.corkdork.entity.CountryEntity;
 import se.iths.corkdork.entity.GrapeEntity;
@@ -57,7 +58,10 @@ public class GrapeService {
    }
 
 
-    public GrapeEntity addCountry(String name, CountryEntity countryEntity) {
+    public GrapeEntity addCountry(String name, Country country) {
+
+        CountryEntity countryEntity = modelMapper.map(country, CountryEntity.class);
+
         GrapeEntity grapeToUpdate = grapeRepository.findByName(name);
 
         grapeToUpdate.setCountry(countryEntity);

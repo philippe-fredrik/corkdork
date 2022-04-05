@@ -2,21 +2,23 @@ package se.iths.corkdork.controller;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import se.iths.corkdork.dtos.Country;
 import se.iths.corkdork.dtos.Grape;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import se.iths.corkdork.entity.GrapeEntity;
 import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.CountryService;
 import se.iths.corkdork.service.GrapeService;
+
 @RestController
 @RequestMapping("grapes")
 public class GrapeController {
 
     private final GrapeService grapeService;
     private final CountryService countryService;
-
 
     public GrapeController(GrapeService grapeService, CountryService countryService) {
         this.grapeService = grapeService;
@@ -54,8 +56,6 @@ public class GrapeController {
 
         Grape grape = grapeService.findById(id);
 
-
-
         return new ResponseEntity<>(grape, HttpStatus.OK);
     }
 
@@ -68,6 +68,17 @@ public class GrapeController {
             throw new EntityNotFoundException("Failed to find any grapes.");
 
         return new ResponseEntity<>(allGrapeEntities, HttpStatus.OK);
+
+    }
+
+    @PostMapping("/{name}/{id}")
+    public ResponseEntity<GrapeEntity> addCountryToGrape(@PathVariable String name, @PathVariable Long id) {
+
+        Country foundCountry = countryService.findCountryById(id);
+
+        GrapeEntity updatedGrape = grapeService.addCountry(name, foundCountry);
+
+        return new ResponseEntity<>(updatedGrape, HttpStatus.OK);
 
     }
 }

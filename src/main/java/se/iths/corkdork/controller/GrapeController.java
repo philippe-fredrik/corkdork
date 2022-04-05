@@ -4,7 +4,9 @@ import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import se.iths.corkdork.dtos.Grape;
+import se.iths.corkdork.dtos.User;
 import se.iths.corkdork.entity.GrapeEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +30,14 @@ public class GrapeController {
     }
 
     @PostMapping("/admin/create")
-    public ResponseEntity<Grape> createGrape(@Valid @RequestBody Grape grape, BindingResult errors) {
+    public ResponseEntity<Grape> createGrape(@Validated @RequestBody Grape grape, BindingResult errors) {
+
         if(errors.hasErrors())
             throw new BadRequestException("Name and color fields are mandatory", errors);
 
-        GrapeEntity createdGrape = grapeService.createGrape(modelMapper.map(grape, GrapeEntity.class));
-        Grape response = modelMapper.map(createdGrape, Grape.class);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        Grape createdGrape = grapeService.createGrape(grape);
+
+        return new ResponseEntity<>(createdGrape, HttpStatus.CREATED);
     }
 
     @DeleteMapping("{id}")
@@ -48,12 +51,10 @@ public class GrapeController {
 
     @PutMapping("admin/{id}")
     public ResponseEntity<Grape> updateGrape(@PathVariable Long id, @RequestBody Grape grape) {
-        if(grapeService.findById(id).isEmpty())
-            throw new EntityNotFoundException(notFound(id));
 
-        GrapeEntity updatedGrape = grapeService.updateGrape(id, modelMapper.map(grape, GrapeEntity.class));
-        Grape response = modelMapper.map(updatedGrape, Grape.class);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        grapeService.updateGrape(id, grape);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("{id}")

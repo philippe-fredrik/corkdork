@@ -6,6 +6,7 @@ import se.iths.corkdork.dtos.Country;
 import se.iths.corkdork.dtos.User;
 import se.iths.corkdork.entity.CountryEntity;
 import org.springframework.stereotype.Service;
+import se.iths.corkdork.entity.WineEntity;
 import se.iths.corkdork.repository.CountryRepository;
 
 import javax.persistence.EntityNotFoundException;
@@ -59,5 +60,13 @@ public class CountryService {
     public void deleteCountry(Long id) {
         CountryEntity foundCountry = countryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         countryRepository.deleteById(foundCountry.getId());
+    }
+
+    public CountryEntity addWine(String name, WineEntity wineEntity) {
+        CountryEntity countryToUpdate = countryRepository.findByName(name);
+
+        countryToUpdate.addWine(wineEntity);
+
+        return countryRepository.save(countryToUpdate);
     }
 }

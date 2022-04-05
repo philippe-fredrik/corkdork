@@ -27,7 +27,7 @@ public class MQConfig {
         return new TopicExchange(EXCHANGE);
     }
 
-    @Bean //Binds the queue to the exchange with the routing key
+    @Bean
     public Binding binding(Queue queue, TopicExchange exchange) {
         return BindingBuilder
                 .bind(queue)
@@ -35,12 +35,12 @@ public class MQConfig {
                 .with(ROUTING_KEY);
     }
 
-    @Bean//Converts the message to Json format
+    @Bean
     public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
     }
 
-    @Bean//template for the message that uses the converter.
+    @Bean
     public AmqpTemplate template(ConnectionFactory connectionFactory) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
         template.setMessageConverter(messageConverter());

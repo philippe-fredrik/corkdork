@@ -1,6 +1,5 @@
 package se.iths.corkdork.service;
 
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import se.iths.corkdork.dtos.Grape;
@@ -26,6 +25,7 @@ public class GrapeService {
         GrapeEntity grapeEntity = modelMapper.map(grape, GrapeEntity.class);
 
         return modelMapper.map(grapeRepository.save(grapeEntity), Grape.class);
+      
     }
 
     public void updateGrape(Long id, Grape grape) {
@@ -54,4 +54,13 @@ public class GrapeService {
         GrapeEntity foundGrape = grapeRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         grapeRepository.deleteById(foundGrape.getId());
    }
+
+
+    public GrapeEntity addCountry(String name, CountryEntity countryEntity) {
+        GrapeEntity grapeToUpdate = grapeRepository.findByName(name);
+
+        grapeToUpdate.setCountry(countryEntity);
+
+        return grapeRepository.save(grapeToUpdate);
+    }
 }

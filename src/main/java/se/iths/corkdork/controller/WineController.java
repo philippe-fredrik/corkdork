@@ -24,11 +24,14 @@ public class WineController {
         this.wineService = wineService;
     }
 
-    @PostMapping("admin/create")
+
+    @PostMapping("")
     public ResponseEntity<Wine> createWine(@Validated @RequestBody Wine wine, BindingResult errors) {
 
         if (errors.hasErrors())
             throw new BadRequestException("Invalid input", errors);
+
+
 
         Wine createdWine = wineService.createWine(wine);
 
@@ -36,7 +39,7 @@ public class WineController {
     }
 
 
-    @PutMapping("admin/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Wine> updateWine(@PathVariable Long id, @RequestBody Wine wine) {
 
         wineService.updateWine(id, wine);
@@ -44,7 +47,7 @@ public class WineController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping({"admin/{id}"})
+    @DeleteMapping({"{id}"})
     public ResponseEntity<Void> deleteWine(@PathVariable Long id) {
 
         wineService.deleteWine(id);
@@ -52,7 +55,7 @@ public class WineController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("public/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<Wine> findWineById(@PathVariable Long id) {
 
         Wine wine = wineService.findWineById(id);
@@ -60,7 +63,7 @@ public class WineController {
         return new ResponseEntity<>(wine, HttpStatus.OK);
     }
 
-    @GetMapping("public")
+    @GetMapping("")
     public ResponseEntity<Iterable<Wine>> findAllWines() {
 
         Iterable<Wine> allWinesEntities = wineService.findAllWines();

@@ -31,7 +31,18 @@ public class UserController {
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
-    @PutMapping("admin/{id}")
+    @PostMapping("signup")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        if (user.getFirstName().isEmpty() || user.getLastName().isEmpty() || user.getUsername().isEmpty()
+                || user.getPassword().isEmpty() || user.getEmail().isEmpty())
+            throw new BadRequestException("Every user credential is mandatory");
+
+        UserEntity createdUser = userService.createUser(modelMapper.map(user, UserEntity.class));
+        User response = modelMapper.map(createdUser, User.class);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @PutMapping("{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
 
         userService.updateUser(id, user);
@@ -39,7 +50,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("admin/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
 
         userService.deleteUser(id);
@@ -47,7 +58,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("public/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<User> findUserById(@PathVariable Long id) {
 
         User user = userService.findUserById(id);
@@ -55,7 +66,8 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping("public")
+  
+    @GetMapping("")
     public ResponseEntity<Iterable<User>> findAllUsers() {
 
         Iterable<User> allUserEntities = userService.findAllUsers();

@@ -13,7 +13,7 @@ import se.iths.corkdork.service.RoleService;
 import java.util.Optional;
 
 @RestController
-@Secured("ADMIN") //Only admin permitted to use requests on roles.
+@Secured("ADMIN")
 @RequestMapping("roles")
 public class RoleController {
 

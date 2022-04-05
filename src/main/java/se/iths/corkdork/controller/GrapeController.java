@@ -8,15 +8,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
+import se.iths.corkdork.service.CountryService;
 import se.iths.corkdork.service.GrapeService;
 @RestController
 @RequestMapping("grapes")
 public class GrapeController {
 
     private final GrapeService grapeService;
+    private final CountryService countryService;
 
-    public GrapeController(GrapeService grapeService) {
+
+    public GrapeController(GrapeService grapeService, CountryService countryService) {
         this.grapeService = grapeService;
+        this.countryService = countryService;
     }
 
     @PostMapping("/admin/create")
@@ -37,7 +41,7 @@ public class GrapeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("admin/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Grape> updateGrape(@PathVariable Long id, @RequestBody Grape grape) {
 
         grapeService.updateGrape(id, grape);
@@ -47,7 +51,10 @@ public class GrapeController {
 
     @GetMapping("{id}")
     public ResponseEntity<Grape> findGrapeById(@PathVariable Long id) {
+
         Grape grape = grapeService.findById(id);
+
+
 
         return new ResponseEntity<>(grape, HttpStatus.OK);
     }
@@ -61,5 +68,6 @@ public class GrapeController {
             throw new EntityNotFoundException("Failed to find any grapes.");
 
         return new ResponseEntity<>(allGrapeEntities, HttpStatus.OK);
+
     }
 }

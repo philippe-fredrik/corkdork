@@ -15,30 +15,20 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final String[] urls = {
-            "/users/**",
-            "/users/signup",
-            "/wines",
-            "/roles",
-            "/countries/**",
-            "/grapes/**",
-            "/publish"};
+    private static final String ADMIN = "ADMIN";
+    private static final String USER = "USER";
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         return http
-                .csrf().ignoringAntMatchers(urls)
-                .and()
+                .csrf().disable()
                 .httpBasic()
                 .and()
                 .authorizeRequests()
                 .antMatchers("/users/signup").permitAll()
-                .antMatchers("/users/**","/roles/**").hasRole("ADMIN")
-                .antMatchers("/wines", "/grapes/**", "/countries/**").hasAnyRole("USER","ADMIN")
+                .antMatchers("/users/**","/roles/**").hasRole(ADMIN)
+                .antMatchers("/wines", "/grapes/**", "/countries/**").hasAnyRole(USER,ADMIN)
                 .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login").permitAll()
                 .and()
                 .logout()
                 .and().build();

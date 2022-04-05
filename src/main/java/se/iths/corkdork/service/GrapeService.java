@@ -2,6 +2,7 @@ package se.iths.corkdork.service;
 
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import se.iths.corkdork.dtos.Grape;
 import se.iths.corkdork.entity.GrapeEntity;
 import org.springframework.stereotype.Service;
@@ -36,12 +37,17 @@ public class GrapeService {
         grapeRepository.save(grapeEntity);
     }
 
-    public Optional<GrapeEntity> findById(Long id) {
-        return grapeRepository.findById(id);
+    public Grape findById(Long id) {
+        Optional<GrapeEntity> foundGrape = grapeRepository.findById(id);
+
+        return modelMapper.map(foundGrape.get(), Grape.class);
     }
 
-   public Iterable<GrapeEntity> getAllGrapes() {
-        return grapeRepository.findAll();
+   public Iterable<Grape> getAllGrapes() {
+       Iterable<GrapeEntity> allGrapeEntities = grapeRepository.findAll();
+
+       return modelMapper.map(allGrapeEntities, new TypeToken<Iterable<Grape>>() {
+       }.getType());
    }
 
    public void deleteGrape(Long id) {

@@ -3,6 +3,7 @@ package se.iths.corkdork.service;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import se.iths.corkdork.dtos.Grape;
+import se.iths.corkdork.entity.CountryEntity;
 import se.iths.corkdork.entity.GrapeEntity;
 import org.springframework.stereotype.Service;
 import se.iths.corkdork.repository.GrapeRepository;

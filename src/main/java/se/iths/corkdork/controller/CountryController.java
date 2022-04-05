@@ -6,7 +6,8 @@ import se.iths.corkdork.dtos.Country;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.iths.corkdork.entity.WineEntity;
+import se.iths.corkdork.dtos.Wine;
+import se.iths.corkdork.entity.CountryEntity;
 import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.CountryService;
@@ -60,7 +61,7 @@ public class CountryController {
     }
 
     @GetMapping()
-    public ResponseEntity<Iterable<Country>> findAllCountries(){
+    public ResponseEntity<Iterable<Country>> findAllCountries() {
 
         Iterable<Country> allCountryEntities = countryService.findAllCountries();
 
@@ -68,13 +69,14 @@ public class CountryController {
             throw new EntityNotFoundException("Failed to find any countries.");
 
         return new ResponseEntity<>(allCountryEntities, HttpStatus.OK);
+    }
        
     @PostMapping("/{name}/{id}")
     public ResponseEntity<CountryEntity> addWineToCountry(@PathVariable String name, @PathVariable Long id) {
-        Optional<WineEntity> foundWine = wineService.findWineById(id);
-        if(foundWine.isEmpty())
-            throw new EntityNotFoundException("Wine with ID: "+id+" was not found");
-        CountryEntity updatedCountry = countryService.addWine(name, foundWine.get());
+
+        Wine foundWine = wineService.findWineById(id);
+
+        CountryEntity updatedCountry = countryService.addWine(name, foundWine);
 
         return new ResponseEntity<>(updatedCountry, HttpStatus.OK);
     

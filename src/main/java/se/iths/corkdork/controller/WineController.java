@@ -1,12 +1,8 @@
 package se.iths.corkdork.controller;
 
-import org.jetbrains.annotations.NotNull;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import se.iths.corkdork.dtos.Wine;
-import se.iths.corkdork.entity.WineEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

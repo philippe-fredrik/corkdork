@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import se.iths.corkdork.dtos.Country;
 import se.iths.corkdork.dtos.User;
+import se.iths.corkdork.dtos.Wine;
 import se.iths.corkdork.entity.CountryEntity;
 import org.springframework.stereotype.Service;
 import se.iths.corkdork.entity.WineEntity;
@@ -62,7 +63,10 @@ public class CountryService {
         countryRepository.deleteById(foundCountry.getId());
     }
 
-    public CountryEntity addWine(String name, WineEntity wineEntity) {
+    public CountryEntity addWine(String name, Wine wine) {
+
+        WineEntity wineEntity = modelMapper.map(wine, WineEntity.class);
+
         CountryEntity countryToUpdate = countryRepository.findByName(name);
 
         countryToUpdate.addWine(wineEntity);

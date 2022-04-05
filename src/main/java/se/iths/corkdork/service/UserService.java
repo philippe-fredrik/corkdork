@@ -41,7 +41,19 @@ public class UserService {
         return modelMapper.map(userRepository.save(userEntity), User.class);
     }
 
+    public void updateUser(Long id, User user) {
+
+        UserEntity userEntity = modelMapper.map(user, UserEntity.class);
+
+        userEntity.setId(id);
+
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+
+        userRepository.save(userEntity);
+    }
+
     public void deleteUser(Long id) {
+
         UserEntity foundUser = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         userRepository.deleteById(foundUser.getId());
     }
@@ -52,12 +64,5 @@ public class UserService {
 
     public Iterable<UserEntity> findAllUsers() {
         return userRepository.findAll();
-    }
-
-    public UserEntity updateUser(Long id, UserEntity userEntity) {
-        userEntity.setId(id);
-        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        userRepository.save(userEntity);
-        return userEntity;
     }
 }

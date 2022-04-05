@@ -26,15 +26,23 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
+    @PostMapping("signup")
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user, BindingResult errors) {
+
+        if (errors.hasErrors())
+            throw new BadRequestException("Invalid input", errors);
+
+        User createdItem = userService.createUser(user);
+
+        return new ResponseEntity<>(createdItem, HttpStatus.CREATED);
+    }
+
     @PutMapping("admin/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
-        if (userService.findUserById(id).isEmpty())
-            throw new EntityNotFoundException(notFound(id));
 
-        UserEntity updatedUser = userService.updateUser(id, modelMapper.map(user, UserEntity.class));
-        User response = modelMapper.map(updatedUser, User.class);
+        userService.updateUser(id, user);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("admin/{id}")
@@ -57,17 +65,6 @@ public class UserController {
         User user = modelMapper.map(foundUser.get(), User.class);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
-    }
-
-    @PostMapping("signup")
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user, BindingResult errors) {
-
-        if (errors.hasErrors())
-            throw new BadRequestException("Invalid input", errors);
-
-        User createdItem = userService.createUser(user);
-
-        return new ResponseEntity<>(createdItem, HttpStatus.CREATED);
     }
 
     @GetMapping("public")

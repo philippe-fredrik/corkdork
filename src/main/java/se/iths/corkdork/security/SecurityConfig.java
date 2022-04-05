@@ -15,7 +15,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final String[] urls = {"/users/**", "/users/signup","/wines/**", "/roles", "/countries", "/grapes", "/publish"};
+    private final String[] urls = {
+            "/users/**",
+            "/users/signup",
+            "/wines",
+            "/roles",
+            "/countries/**",
+            "/grapes/**",
+            "/publish"};
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -25,9 +32,9 @@ public class SecurityConfig {
                 .httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/home", "/users/signup").permitAll()
-                .antMatchers("/**/admin/**", "/**/admin", "/publish").hasRole("ADMIN")
-                .antMatchers("/**/public/**", "/**/public").hasRole("USER")
+                .antMatchers("/users/signup").permitAll()
+                .antMatchers("/users/**","/roles/**").hasRole("ADMIN")
+                .antMatchers("/wines", "/grapes/**", "/countries/**").hasAnyRole("USER","ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

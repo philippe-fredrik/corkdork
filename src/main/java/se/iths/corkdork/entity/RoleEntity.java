@@ -14,7 +14,8 @@ public class RoleEntity {
     @Column(nullable = false)
     private String role;
 
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL, mappedBy = "role")
+    @OneToMany(cascade = CascadeType.ALL,
+    orphanRemoval = true, mappedBy = "role")
     private Set<UserEntity> users = new HashSet<>();
 
     public RoleEntity(String role) {

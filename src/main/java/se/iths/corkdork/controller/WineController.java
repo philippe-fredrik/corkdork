@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import se.iths.corkdork.dtos.Wine;
 import se.iths.corkdork.entity.WineEntity;
 import org.springframework.http.HttpStatus;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.WineService;
-
-import javax.validation.Valid;
 import java.util.Optional;
 
 
@@ -30,24 +29,26 @@ public class WineController {
     }
 
     @PostMapping("admin/create")
-    public ResponseEntity<Wine> createWine(@Valid @RequestBody Wine wine, BindingResult errors) {
-        if (errors.hasErrors())
-            throw new BadRequestException("Name cannot be empty.", errors);
+    public ResponseEntity<Wine> createWine(@Validated @RequestBody Wine wine, BindingResult errors) {
 
-        WineEntity createdWine = wineService.createWine(modelMapper.map(wine, WineEntity.class));
-        Wine response = modelMapper.map(createdWine, Wine.class);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        if (errors.hasErrors())
+            throw new BadRequestException("Invalid input", errors);
+
+        Wine createdWine = wineService.createWine(wine);
+
+        return new ResponseEntity<>(createdWine, HttpStatus.CREATED);
     }
 
 
     @PutMapping("admin/{id}")
     public ResponseEntity<Wine> updateWine(@PathVariable Long id, @RequestBody Wine wine) {
-        if (wineService.findWineById(id).isEmpty())
-            throw new EntityNotFoundException(notFound(id));
 
-        WineEntity updatedWine = wineService.updateWine(id, modelMapper.map(wine, WineEntity.class));
-        Wine response = modelMapper.map(updatedWine, Wine.class);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        if (wineService.findWineById(id).isEmpty())
+            throw new se.iths.corkdork.exception.EntityNotFoundException(notFound(id));
+
+        wineService.updateWine(id, wine);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping({"admin/{id}"})

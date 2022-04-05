@@ -12,7 +12,6 @@ import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.WineService;
 
-import javax.validation.Valid;
 import java.util.Optional;
 
 
@@ -56,7 +55,7 @@ public class WineController {
 
         wineService.deleteWine(id);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("{id}")
@@ -89,6 +88,6 @@ public class WineController {
 
     @NotNull
     private String notFound(Long id) {
-        return "Wine with ID: " + id + "was not found.";
+        return "Wine with ID: " + id + " was not found.";
     }
 }

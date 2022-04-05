@@ -2,6 +2,7 @@ package se.iths.corkdork.service;
 
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import se.iths.corkdork.dtos.Wine;
 import se.iths.corkdork.entity.WineEntity;
 import org.springframework.stereotype.Service;
@@ -42,11 +43,20 @@ public class WineService {
         wineRepository.deleteById(foundWine.getId());
     }
 
-    public Optional<WineEntity> findWineById(Long id) {
-        return wineRepository.findById(id);
+    public Wine findWineById(Long id) {
+
+        Optional<WineEntity> foundWine = wineRepository.findById(id);
+
+        return modelMapper.map(foundWine.get(), Wine.class);
     }
 
-    public Iterable<WineEntity> findAllWines(){
-        return wineRepository.findAll();
+    public Iterable<Wine> findAllWines(){
+
+        Iterable<WineEntity> allWinesEntities = wineRepository.findAll();
+
+        return modelMapper.map(
+                allWinesEntities,
+                new TypeToken<Iterable<Wine>>() {
+                }.getType());
     }
 }

@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/users/signup").permitAll()
+                .antMatchers("/sendemail").permitAll()
                 .antMatchers("/users/**","/roles/**").hasRole(ADMIN)
                 .antMatchers("/wines", "/grapes/**", "/countries/**").hasAnyRole(USER,ADMIN)
                 .anyRequest().authenticated()

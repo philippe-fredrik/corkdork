@@ -25,6 +25,7 @@ public class UserService {
                        RoleRepository roleRepository,
                        PasswordEncoder passwordEncoder,
                        ModelMapper modelMapper) {
+      
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;

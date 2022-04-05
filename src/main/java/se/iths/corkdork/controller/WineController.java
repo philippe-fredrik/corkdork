@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.WineService;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("wines")
@@ -48,7 +49,7 @@ public class WineController {
 
         wineService.deleteWine(id);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("{id}")
@@ -68,5 +69,6 @@ public class WineController {
             throw new EntityNotFoundException("Failed to find any wines.");
 
         return new ResponseEntity<>(allWinesEntities, HttpStatus.OK);
+
     }
 }

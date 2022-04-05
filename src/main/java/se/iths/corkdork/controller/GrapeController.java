@@ -58,7 +58,7 @@ public class GrapeController {
         Iterable<Grape> allGrapeEntities = grapeService.getAllGrapes();
 
         if (!allGrapeEntities.iterator().hasNext())
-            throw new EntityNotFoundException("Failed to find any wines.");
+            throw new EntityNotFoundException("Failed to find any grapes.");
 
         return new ResponseEntity<>(allGrapeEntities, HttpStatus.OK);
     }

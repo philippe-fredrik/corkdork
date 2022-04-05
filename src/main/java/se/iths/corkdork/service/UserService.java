@@ -53,12 +53,6 @@ public class UserService {
         userRepository.save(userEntity);
     }
 
-    public void deleteUser(Long id) {
-
-        UserEntity foundUser = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        userRepository.deleteById(foundUser.getId());
-    }
-
     public User findUserById(Long id) {
 
         Optional<UserEntity> foundUser = userRepository.findById(id);
@@ -72,5 +66,11 @@ public class UserService {
 
         return modelMapper.map(allUserEntities, new TypeToken<Iterable<User>>() {
         }.getType());
+    }
+
+    public void deleteUser(Long id) {
+
+        UserEntity foundUser = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        userRepository.deleteById(foundUser.getId());
     }
 }

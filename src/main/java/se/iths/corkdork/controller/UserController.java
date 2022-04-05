@@ -1,6 +1,7 @@
 package se.iths.corkdork.controller;
 
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import se.iths.corkdork.dtos.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.UserService;
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("users")
@@ -21,14 +21,14 @@ public class UserController {
     }
 
     @PostMapping("signup")
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user, BindingResult errors) {
+    public ResponseEntity<User> createUser(@Validated @RequestBody User user, BindingResult errors) {
 
         if (errors.hasErrors())
             throw new BadRequestException("Invalid input", errors);
 
-        User createdItem = userService.createUser(user);
+        User createdUser = userService.createUser(user);
 
-        return new ResponseEntity<>(createdItem, HttpStatus.CREATED);
+        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     @PutMapping("admin/{id}")
@@ -43,6 +43,7 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
 
         userService.deleteUser(id);
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
@@ -56,7 +57,9 @@ public class UserController {
 
     @GetMapping("public")
     public ResponseEntity<Iterable<User>> findAllUsers() {
+
         Iterable<User> allUserEntities = userService.findAllUsers();
+
         if (!allUserEntities.iterator().hasNext())
             throw new EntityNotFoundException("Failed to find any wines.");
 

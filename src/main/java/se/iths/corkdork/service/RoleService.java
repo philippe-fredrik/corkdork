@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import se.iths.corkdork.entity.RoleEntity;
 import se.iths.corkdork.repository.RoleRepository;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -28,13 +27,12 @@ public class RoleService {
         return roleRepository.findAll();
     }
 
-    @Transactional
     public void updateRole(Long id, String role) {
         RoleEntity foundRole = roleRepository.findById(id).orElseThrow();
         roleRepository.save(foundRole);
     }
 
-    public void deleteUser(Long id) {
+    public void deleteRole(Long id) {
         RoleEntity foundRole = roleRepository.findById(id).orElseThrow();
         roleRepository.delete(foundRole);
     }

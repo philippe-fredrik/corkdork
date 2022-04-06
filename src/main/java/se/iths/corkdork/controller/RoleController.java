@@ -24,14 +24,14 @@ public class RoleController {
 
     }
 
-    @PostMapping()
+    @PostMapping("")
     public ResponseEntity<RoleEntity> createRole(@RequestBody RoleEntity roleEntity, BindingResult errors) {
         if (errors.hasErrors())
             throw new BadRequestException("Role field is mandatory", errors);
 
-        roleService.createRole(roleEntity);
+        RoleEntity createdRole = roleService.createRole(roleEntity);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(createdRole, HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
@@ -41,7 +41,7 @@ public class RoleController {
         if (foundRole.isEmpty()) {
             throw new EntityNotFoundException(responseMessage(id));
         }
-        return new ResponseEntity<>(HttpStatus.FOUND);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping()
@@ -52,7 +52,7 @@ public class RoleController {
             throw new EntityNotFoundException("There are no roles registered in the database");
         }
 
-        return new ResponseEntity<>(allRoles, HttpStatus.FOUND);
+        return new ResponseEntity<>(allRoles, HttpStatus.OK);
     }
 
     @PutMapping()
@@ -71,7 +71,7 @@ public class RoleController {
             throw new EntityNotFoundException(responseMessage(id));
         }
 
-        roleService.deleteUser(id);
+        roleService.deleteRole(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

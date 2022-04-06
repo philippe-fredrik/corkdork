@@ -26,7 +26,7 @@ public class CountryController {
 
     }
 
-    @PostMapping("/admin/create")
+    @PostMapping()
     public ResponseEntity<Country> createCountry(@Validated @RequestBody Country country, BindingResult errors){
         if (errors.hasErrors())
             throw new BadRequestException("Invalid input", errors);

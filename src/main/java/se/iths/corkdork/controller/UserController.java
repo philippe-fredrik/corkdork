@@ -6,6 +6,7 @@ import se.iths.corkdork.dtos.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.messaging.MessagePublisher;
 import se.iths.corkdork.service.UserService;

@@ -17,7 +17,6 @@ public class MessagePublisher {
 
     public MessagePublisher(RabbitTemplate template) {
         this.template = template;
-
     }
 
 //    @PostMapping("/publish")

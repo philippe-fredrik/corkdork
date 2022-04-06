@@ -17,9 +17,11 @@ public class FeedbackController {
 
     private final EmailConfig emailConfig;
 
+
     public FeedbackController(EmailConfig emailConfig) {
         this.emailConfig = emailConfig;
     }
+
 
     @PostMapping
     public void sendFeedback(@RequestBody Feedback feedback, BindingResult bindingResult) throws ValidationException {
@@ -43,14 +45,11 @@ public class FeedbackController {
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(feedback.getEmail());
-        mailMessage.setTo("eriksson.nf@gmail.com");
+        mailMessage.setTo("philippe.vial90@gmail.com");
         mailMessage.setSubject("New feedback from " + feedback.getName());
-        mailMessage.setText(feedback.getFeedback());
+        mailMessage.setText(feedback.getEmailFeedback());
 
         mailSender.send(mailMessage);
-
-
     }
-
 
 }

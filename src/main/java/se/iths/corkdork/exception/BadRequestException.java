@@ -24,8 +24,6 @@ public class BadRequestException extends RuntimeException{
         return this.getMessages().toString();
     }
 
-
-    //demonstrate how to extract a message from the binging result
     private static List<String> getValidationMessage(BindingResult bindingResult) {
         return bindingResult.getAllErrors()
                 .stream()

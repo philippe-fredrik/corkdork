@@ -25,7 +25,7 @@ public class GrapeController {
         this.countryService = countryService;
     }
 
-    @PostMapping("/admin/create")
+    @PostMapping("")
     public ResponseEntity<Grape> createGrape(@Validated @RequestBody Grape grape, BindingResult errors) {
 
         if(errors.hasErrors())
@@ -59,7 +59,7 @@ public class GrapeController {
         return new ResponseEntity<>(grape, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<Iterable<Grape>> findAllGrapes() {
 
         Iterable<Grape> allGrapeEntities = grapeService.getAllGrapes();

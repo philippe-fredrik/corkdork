@@ -1,10 +1,12 @@
 package se.iths.corkdork.service;
 
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import se.iths.corkdork.dtos.Wine;
 import se.iths.corkdork.entity.WineEntity;
 import org.springframework.stereotype.Service;
 import se.iths.corkdork.repository.WineRepository;
-
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
@@ -12,31 +14,49 @@ import java.util.Optional;
 public class WineService {
 
     private final WineRepository wineRepository;
+    private final ModelMapper modelMapper;
 
-
-    public WineService(WineRepository wineRepository) {
+    public WineService(WineRepository wineRepository, ModelMapper modelMapper) {
         this.wineRepository = wineRepository;
+        this.modelMapper = modelMapper;
     }
 
-    public WineEntity createWine(WineEntity wineEntity){
-        return wineRepository.save(wineEntity);
+    public Wine createWine(Wine wine){
+
+        WineEntity wineEntity = modelMapper.map(wine, WineEntity.class);
+
+        return modelMapper.map(wineRepository.save(wineEntity), Wine.class);
     }
 
-    public WineEntity updateWine(Long id, WineEntity wineEntity) {
+    public void updateWine(Long id, Wine wine) {
+
+        WineEntity wineEntity = modelMapper.map(wine, WineEntity.class);
+
         wineEntity.setId(id);
-        return wineRepository.save(wineEntity);
-    }
+
+        wineRepository.save(wineEntity);
+
+        }
 
     public void deleteWine(Long id){
         WineEntity foundWine = wineRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         wineRepository.deleteById(foundWine.getId());
     }
 
-    public Optional<WineEntity> findWineById(Long id) {
-        return wineRepository.findById(id);
+    public Wine findWineById(Long id) {
+
+        Optional<WineEntity> foundWine = wineRepository.findById(id);
+
+        return modelMapper.map(foundWine.get(), Wine.class);
     }
 
-    public Iterable<WineEntity> findAllWines(){
-        return wineRepository.findAll();
+    public Iterable<Wine> findAllWines(){
+
+        Iterable<WineEntity> allWinesEntities = wineRepository.findAll();
+
+        return modelMapper.map(
+                allWinesEntities,
+                new TypeToken<Iterable<Wine>>() {
+                }.getType());
     }
 }

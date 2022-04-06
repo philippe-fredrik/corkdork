@@ -3,6 +3,7 @@ package se.iths.corkdork.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import se.iths.corkdork.entity.RoleEntity;
 import se.iths.corkdork.exception.BadRequestException;
@@ -24,10 +25,10 @@ public class RoleController {
     }
 
     @PostMapping()
-    public ResponseEntity<RoleEntity> createRole(@RequestBody RoleEntity roleEntity) {
-        if (roleEntity.getRole().isEmpty()) {
-            throw new BadRequestException("Role field is mandatory");
-        }
+    public ResponseEntity<RoleEntity> createRole(@RequestBody RoleEntity roleEntity, BindingResult errors) {
+        if (errors.hasErrors())
+            throw new BadRequestException("Role field is mandatory", errors);
+
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

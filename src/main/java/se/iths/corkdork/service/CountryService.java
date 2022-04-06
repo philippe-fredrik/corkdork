@@ -1,6 +1,10 @@
 package se.iths.corkdork.service;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import se.iths.corkdork.dtos.Country;
+import se.iths.corkdork.dtos.User;
+import se.iths.corkdork.dtos.Wine;
 import se.iths.corkdork.entity.CountryEntity;
 import org.springframework.stereotype.Service;
 import se.iths.corkdork.entity.WineEntity;
@@ -14,14 +18,44 @@ import java.util.Optional;
 public class CountryService {
 
     private final CountryRepository countryRepository;
+    private final ModelMapper modelMapper;
 
-
-    public CountryService(CountryRepository countryRepository) {
+    public CountryService(CountryRepository countryRepository, ModelMapper modelMapper) {
         this.countryRepository = countryRepository;
+        this.modelMapper = modelMapper;
     }
 
-    public CountryEntity createCountry(CountryEntity countryEntity) {
-        return countryRepository.save(countryEntity);
+    public Country createCountry(Country country) {
+
+        CountryEntity countryEntity = modelMapper.map(country, CountryEntity.class);
+
+        return modelMapper.map(countryRepository.save(countryEntity),Country.class);
+    }
+
+    @Transactional
+    public void updateCountry(Long id, Country country) {
+
+        CountryEntity countryEntity = modelMapper.map(country, CountryEntity.class);
+
+        countryEntity.setId(id);
+
+        countryRepository.save(countryEntity);
+
+    }
+
+    public Country findCountryById(Long id) {
+        Optional<CountryEntity> foundCountry = countryRepository.findById(id);
+
+        return modelMapper.map(foundCountry.get(), Country.class);
+    }
+
+    public Iterable<Country> findAllCountries() {
+        Iterable<CountryEntity> allCountryEntities = countryRepository.findAll();
+
+        return modelMapper.map(allCountryEntities, new TypeToken<Iterable<User>>() {
+        }.getType());
+
+
     }
 
     public void deleteCountry(Long id) {
@@ -29,21 +63,10 @@ public class CountryService {
         countryRepository.deleteById(foundCountry.getId());
     }
 
-    public Optional<CountryEntity> findCountryById(Long id) {
-        return countryRepository.findById(id);
-    }
+    public CountryEntity addWine(String name, Wine wine) {
 
-    public Iterable<CountryEntity> findAllCountries() {
-        return countryRepository.findAll();
-    }
+        WineEntity wineEntity = modelMapper.map(wine, WineEntity.class);
 
-    @Transactional
-    public void updateCountry(Long id, Country country) {
-        CountryEntity foundCountry = countryRepository.findById(id).orElseThrow();
-        countryRepository.save(foundCountry);
-    }
-
-    public CountryEntity addWine(String name, WineEntity wineEntity) {
         CountryEntity countryToUpdate = countryRepository.findByName(name);
 
         countryToUpdate.addWine(wineEntity);

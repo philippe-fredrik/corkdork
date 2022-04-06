@@ -14,7 +14,7 @@ import se.iths.corkdork.repository.RoleRepository;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
-public class RoleServiceTest {
+class RoleServiceTest {
 
     @Mock
     private RoleRepository roleRepository;
@@ -36,7 +36,7 @@ public class RoleServiceTest {
     }
 
     @Test
-    void findByIdShouldReturnOptionalRoleWithId1() {
+    void findByIdShouldReturnOptionalRoleWithIdOne() {
         RoleEntity role = new RoleEntity();
         role.setRole("ROLE_TEST");
         role.setId(1L);
@@ -48,4 +48,22 @@ public class RoleServiceTest {
         assertThat(expectedResult).isEqualTo(Optional.of(role));
 
     }
+
+    @Test
+    void findAllShouldReturnAllRoles() {
+        List<RoleEntity> roles = List.of(
+                new RoleEntity().setRole("ROLE_TEST").setId(1L),
+                new RoleEntity().setRole("ROLE_USER").setId(2L),
+                new RoleEntity().setRole("ROLE_ADMIN").setId(3L)
+        );
+
+        when(roleRepository.findAll()).thenReturn(roles);
+
+        Iterable<RoleEntity> foundRoles = roleService.findAllRoles();
+
+        assertThat(foundRoles).isEqualTo(roles);
+
+    }
+
+
 }

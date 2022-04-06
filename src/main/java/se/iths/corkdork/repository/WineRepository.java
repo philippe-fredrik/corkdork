@@ -4,7 +4,9 @@ import se.iths.corkdork.entity.WineEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface WineRepository extends CrudRepository<WineEntity, Long> {
-    WineEntity findByName(String name);
+    Optional<WineEntity> findByName(String name);
 }

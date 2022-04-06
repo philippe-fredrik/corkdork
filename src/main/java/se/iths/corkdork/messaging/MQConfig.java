@@ -19,7 +19,6 @@ public class MQConfig {
     @Bean
     public Queue queue() {
         return new Queue(QUEUE);
-
     }
 
     @Bean

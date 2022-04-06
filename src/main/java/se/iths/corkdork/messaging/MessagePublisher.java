@@ -19,21 +19,10 @@ public class MessagePublisher {
         this.template = template;
     }
 
-//    @PostMapping("/publish")
-//    public String publishMessage(@RequestBody CustomMessage message) {
-//        message.setMessageId(UUID.randomUUID().toString());
-//        message.setMessageDate(new Date());
-//        template.convertAndSend(MQConfig.EXCHANGE,
-//                MQConfig.ROUTING_KEY, message);
-//
-//        return "Message Published";
-//    }
-
-
-    public void sendMessage(String username){
+    public void sendMessage(String username) {
         logger.info("User created: {}", username);
-        CustomMessage customMessage = new CustomMessage(UUID.randomUUID().toString(), "User created: " + username, new Date());
+        CustomMessage customMessage = new CustomMessage(UUID.randomUUID().toString(),
+                "User created: " + username, new Date());
         template.convertAndSend(MQConfig.EXCHANGE, MQConfig.ROUTING_KEY, customMessage);
-
     }
 }

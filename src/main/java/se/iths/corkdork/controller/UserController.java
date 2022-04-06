@@ -11,6 +11,7 @@ import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.messaging.MessagePublisher;
 import se.iths.corkdork.service.UserService;
 
+
 @RestController
 @RequestMapping("users")
 public class UserController {
@@ -20,17 +21,17 @@ public class UserController {
 
     public UserController(UserService userService, MessagePublisher messagePublisher) {
         this.userService = userService;
-
         this.messagePublisher = messagePublisher;
     }
 
     @PostMapping("signup")
     public ResponseEntity<User> createUser(@Validated @RequestBody User user, BindingResult errors) {
+
         if (errors.hasErrors())
             throw new BadRequestException("Invalid input", errors);
-
         User createdUser = userService.createUser(user);
         messagePublisher.sendMessage(createdUser.getUsername());
+
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
@@ -57,7 +58,6 @@ public class UserController {
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
 
     @GetMapping("")
     public ResponseEntity<Iterable<User>> findAllUsers() {

@@ -58,7 +58,7 @@ public class UserService {
 
         Optional<UserEntity> foundUser = userRepository.findById(id);
 
-        return modelMapper.map(foundUser.get(), User.class);
+        return modelMapper.map(foundUser, User.class);
     }
 
     public Iterable<User> findAllUsers() {

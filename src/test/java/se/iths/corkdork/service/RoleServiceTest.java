@@ -1,5 +1,6 @@
 package se.iths.corkdork.service;
 
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -8,9 +9,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
+
+import org.modelmapper.ModelMapper;
+import se.iths.corkdork.dtos.Role;
 import se.iths.corkdork.entity.RoleEntity;
 import se.iths.corkdork.repository.RoleRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -22,30 +27,35 @@ class RoleServiceTest {
     @InjectMocks
     private RoleService roleService;
 
+    @Mock
+    private ModelMapper modelMapper;
+
+
     @Test
     void createShouldReturnCreatedRole() {
-        RoleEntity role = new RoleEntity();
-        role.setRole("ROLE_TEST");
-        role.setId(1L);
+        Role role = new Role().setRoleName("ROLE_TEST").setId(1L);
 
-        when(roleRepository.save(role)).thenReturn(role);
+        when(roleService.createRole(role)).thenReturn(role);
 
-        RoleEntity roleCreatedWithService = roleService.createRole(role);
+        Role createdRole = roleService.createRole(role);
 
-        assertThat(roleCreatedWithService).isEqualTo(role);
+        assertThat(createdRole).isEqualTo(role);
+
     }
 
     @Test
     void findByIdShouldReturnOptionalRoleWithIdOne() {
-        RoleEntity role = new RoleEntity();
-        role.setRole("ROLE_TEST");
-        role.setId(1L);
+        //RoleEntity roleEntity = modelMapper.map(role, RoleEntity.class);
+        RoleEntity roleEntity = new RoleEntity();
+        Role role = new Role().setRoleName("ROLE_TEST").setId(1L);
+        role.setRoleName("ROLE_TEST").setId(1L);
 
-        when(roleRepository.findById(1L)).thenReturn(Optional.of(role));
+        when(modelMapper.map(any(), any())).thenReturn(role);
+        when(roleRepository.findById(role.getId())).thenReturn(Optional.of(roleEntity));
 
-        Optional<RoleEntity> expectedResult = roleService.findRoleById(1L);
+        Role expectedResult = roleService.findRoleById(role.getId());
 
-        assertThat(expectedResult).isEqualTo(Optional.of(role));
+        assertThat(expectedResult).isEqualTo(role);
 
     }
 
@@ -62,6 +72,31 @@ class RoleServiceTest {
         Iterable<RoleEntity> foundRoles = roleService.findAllRoles();
 
         assertThat(foundRoles).isEqualTo(roles);
+
+    }
+
+    @Test
+    void deleteRoleShouldDeleteRoleWithIdOne() {
+        RoleEntity roleEntity = new RoleEntity();
+
+        final Long id = 1L;
+        roleEntity.setRole("ROLE_TEST").setId(id);
+
+        when(roleRepository.findById(id)).thenReturn(Optional.of(roleEntity));
+
+        roleService.deleteRole(roleEntity.getId());
+
+        verify(roleRepository, times(1)).deleteById(id);
+    }
+
+    @Test
+    void updateRoleShouldReturnRoleWithNewRoleUser() {
+        Role role = new Role().setRoleName("TEST_ROLE").setId(1L);
+        roleService.updateRole(role.getId(), role);
+
+        RoleEntity roleEntity = modelMapper.map(role, RoleEntity.class);
+
+        verify(roleRepository, times(1)).save(roleEntity);
 
     }
 

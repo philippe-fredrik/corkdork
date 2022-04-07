@@ -37,7 +37,10 @@ public class CountryController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Country> updateCountry(@PathVariable Long id, @RequestBody Country country){
+    public ResponseEntity<Country> updateCountry(@PathVariable Long id, @RequestBody Country country, BindingResult errors){
+
+        if (errors.hasErrors())
+            throw new EntityNotFoundException(notFound(id));
 
         countryService.updateCountry(id, country);
 
@@ -80,5 +83,8 @@ public class CountryController {
 
         return new ResponseEntity<>(updatedCountry, HttpStatus.OK);
     
+    }
+    private String notFound(Long id) {
+        return "User with ID: " + id + " was not found.";
     }
 }

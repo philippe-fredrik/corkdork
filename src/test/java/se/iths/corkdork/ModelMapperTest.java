@@ -1,7 +1,10 @@
 package se.iths.corkdork;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import se.iths.corkdork.dtos.Role;
 import se.iths.corkdork.dtos.User;
 import se.iths.corkdork.entity.RoleEntity;
@@ -9,6 +12,8 @@ import se.iths.corkdork.entity.UserEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 class UserModelMapperTest {
 
     private final ModelMapper modelMapper = new ModelMapper();

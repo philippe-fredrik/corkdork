@@ -44,7 +44,10 @@ public class GrapeController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Grape> updateGrape(@PathVariable Long id, @RequestBody Grape grape) {
+    public ResponseEntity<Grape> updateGrape(@PathVariable Long id, @Validated @RequestBody Grape grape, BindingResult errors) {
+
+        if (errors.hasErrors())
+            throw new EntityNotFoundException(notFound(id));
 
         grapeService.updateGrape(id, grape);
 
@@ -80,5 +83,8 @@ public class GrapeController {
 
         return new ResponseEntity<>(updatedGrape, HttpStatus.OK);
 
+    }
+    private String notFound(Long id) {
+        return "User with ID: " + id + " was not found.";
     }
 }

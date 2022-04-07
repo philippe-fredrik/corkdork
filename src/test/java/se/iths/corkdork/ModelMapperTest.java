@@ -10,6 +10,7 @@ import se.iths.corkdork.entity.UserEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UserModelMapperTest {
+
     private final ModelMapper modelMapper = new ModelMapper();
 
     @Test

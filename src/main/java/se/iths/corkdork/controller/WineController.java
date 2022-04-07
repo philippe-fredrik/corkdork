@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.WineService;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("wines")
@@ -28,8 +27,6 @@ public class WineController {
         if (errors.hasErrors())
             throw new BadRequestException("Invalid input", errors);
 
-
-
         Wine createdWine = wineService.createWine(wine);
 
         return new ResponseEntity<>(createdWine, HttpStatus.CREATED);
@@ -37,7 +34,10 @@ public class WineController {
 
 
     @PutMapping("{id}")
-    public ResponseEntity<Wine> updateWine(@PathVariable Long id, @RequestBody Wine wine) {
+    public ResponseEntity<Wine> updateWine(@PathVariable Long id, @RequestBody Wine wine, BindingResult errors) {
+
+        if (errors.hasErrors())
+            throw new EntityNotFoundException(notFound(id));
 
         wineService.updateWine(id, wine);
 
@@ -70,5 +70,9 @@ public class WineController {
 
         return new ResponseEntity<>(allWinesEntities, HttpStatus.OK);
 
+    }
+
+    private String notFound(Long id) {
+        return "User with ID: " + id + " was not found.";
     }
 }

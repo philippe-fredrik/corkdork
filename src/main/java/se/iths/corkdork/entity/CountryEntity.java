@@ -24,6 +24,9 @@ public class CountryEntity {
                 orphanRemoval = true)
     private Set<GrapeEntity> grapes = new HashSet<>();
 
+   
+    public CountryEntity() {
+    }
 
     public void addWine(WineEntity wine) {
         wines.add(wine);

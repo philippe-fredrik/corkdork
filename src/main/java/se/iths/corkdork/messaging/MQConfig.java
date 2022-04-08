@@ -17,13 +17,13 @@ public class MQConfig {
     public static final String ROUTING_KEY = "message_routingKey";
 
     @Bean
-    public Queue queue() {
+    public Queue messageQueue() {
         return new Queue(QUEUE);
 
     }
 
     @Bean
-    public TopicExchange exchange() {
+    public TopicExchange topicExchange() {
         return new TopicExchange(EXCHANGE);
     }
 

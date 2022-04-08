@@ -9,8 +9,8 @@ import se.iths.corkdork.entity.UserEntity;
 import org.springframework.stereotype.Service;
 import se.iths.corkdork.repository.RoleRepository;
 import se.iths.corkdork.repository.UserRepository;
+import se.iths.corkdork.exception.EntityNotFoundException;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -25,7 +25,7 @@ public class UserService {
                        RoleRepository roleRepository,
                        PasswordEncoder passwordEncoder,
                        ModelMapper modelMapper) {
-      
+
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -45,6 +45,10 @@ public class UserService {
 
     public void updateUser(Long id, User user) {
 
+        Optional<UserEntity> foundUser = userRepository.findById(id);
+        if (foundUser.isEmpty())
+            throw new EntityNotFoundException("No user with id "+id+" was found.");
+
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
 
         userEntity.setId(id);
@@ -57,6 +61,8 @@ public class UserService {
     public User findUserById(Long id) {
 
         Optional<UserEntity> foundUser = userRepository.findById(id);
+        if (foundUser.isEmpty())
+            throw new EntityNotFoundException("No user with id "+id+" was found.");
 
         return modelMapper.map(foundUser.get(), User.class);
     }

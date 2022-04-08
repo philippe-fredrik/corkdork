@@ -9,7 +9,6 @@ import se.iths.corkdork.entity.CountryEntity;
 import org.springframework.stereotype.Service;
 import se.iths.corkdork.entity.WineEntity;
 import se.iths.corkdork.repository.CountryRepository;
-
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -46,7 +45,7 @@ public class CountryService {
     public Country findCountryById(Long id) {
         Optional<CountryEntity> foundCountry = countryRepository.findById(id);
 
-        return modelMapper.map(foundCountry.get(), Country.class);
+        return modelMapper.map(foundCountry, Country.class);
     }
 
     public Iterable<Country> findAllCountries() {

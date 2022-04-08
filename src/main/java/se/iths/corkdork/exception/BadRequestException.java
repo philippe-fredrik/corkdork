@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class BadRequestException extends RuntimeException{
 
-    private final BindingResult errors;
+    private final transient BindingResult errors;
 
     public BadRequestException(String message, BindingResult errors) {
         super(message);

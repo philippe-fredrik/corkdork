@@ -11,7 +11,7 @@ import java.util.Collection;
 
 public class UserPrincipal implements UserDetails {
 
-    private final UserEntity userEntity;
+    private final transient UserEntity userEntity;
 
     public UserPrincipal(UserEntity userEntity) {
         super();

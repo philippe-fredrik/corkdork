@@ -47,7 +47,7 @@ public class WineService {
 
         Optional<WineEntity> foundWine = wineRepository.findById(id);
 
-        return modelMapper.map(foundWine.get(), Wine.class);
+        return modelMapper.map(foundWine, Wine.class);
     }
 
     public Iterable<Wine> findAllWines(){

@@ -42,7 +42,7 @@ public class GrapeService {
     public Grape findById(Long id) {
         Optional<GrapeEntity> foundGrape = grapeRepository.findById(id);
 
-        return modelMapper.map(foundGrape.get(), Grape.class);
+        return modelMapper.map(foundGrape, Grape.class);
     }
 
    public Iterable<Grape> getAllGrapes() {

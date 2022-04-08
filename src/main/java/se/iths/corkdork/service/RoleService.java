@@ -30,6 +30,8 @@ public class RoleService {
 
     public Role findRoleById(Long id) {
         Optional<RoleEntity> foundRole = roleRepository.findById(id);
+        if(foundRole.isEmpty())
+            throw new se.iths.corkdork.exception.EntityNotFoundException("Role with ID: " + id + " was not found");
         return modelMapper.map(foundRole, Role.class);
     }
 

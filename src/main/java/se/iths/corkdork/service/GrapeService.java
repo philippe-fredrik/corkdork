@@ -32,6 +32,10 @@ public class GrapeService {
 
     public void updateGrape(Long id, Grape grape) {
 
+        Optional<GrapeEntity> foundGrape = grapeRepository.findById(id);
+        if (foundGrape.isEmpty())
+            throw new se.iths.corkdork.exception.EntityNotFoundException("No grape with id "+id+" was found.");
+
         GrapeEntity grapeEntity = modelMapper.map(grape, GrapeEntity.class);
 
         grapeEntity.setId(id);
@@ -41,6 +45,9 @@ public class GrapeService {
 
     public Grape findById(Long id) {
         Optional<GrapeEntity> foundGrape = grapeRepository.findById(id);
+
+        if (foundGrape.isEmpty())
+            throw new se.iths.corkdork.exception.EntityNotFoundException("No grape with id "+id+" was found.");
 
         return modelMapper.map(foundGrape.get(), Grape.class);
     }

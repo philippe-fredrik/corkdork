@@ -30,6 +30,11 @@ public class WineService {
 
     public void updateWine(Long id, Wine wine) {
 
+        Optional<WineEntity> foundWine = wineRepository.findById(id);
+
+        if (foundWine.isEmpty())
+            throw new se.iths.corkdork.exception.EntityNotFoundException("No country with id "+id+" was found.");
+
         WineEntity wineEntity = modelMapper.map(wine, WineEntity.class);
 
         wineEntity.setId(id);
@@ -46,6 +51,9 @@ public class WineService {
     public Wine findWineById(Long id) {
 
         Optional<WineEntity> foundWine = wineRepository.findById(id);
+
+        if (foundWine.isEmpty())
+            throw new se.iths.corkdork.exception.EntityNotFoundException("No country with id "+id+" was found.");
 
         return modelMapper.map(foundWine.get(), Wine.class);
     }

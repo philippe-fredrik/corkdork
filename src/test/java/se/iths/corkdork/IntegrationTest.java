@@ -1,27 +1,33 @@
 package se.iths.corkdork;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
+
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import se.iths.corkdork.controller.RoleController;
+import se.iths.corkdork.dtos.Role;
 import se.iths.corkdork.entity.*;
-import se.iths.corkdork.repository.CountryRepository;
+import se.iths.corkdork.repository.RoleRepository;
 import se.iths.corkdork.repository.UserRepository;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import se.iths.corkdork.security.SecurityConfig;
+import se.iths.corkdork.service.RoleService;
+
+import static org.codehaus.groovy.runtime.DefaultGroovyMethods.any;
+
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
+@Import({RoleService.class, SecurityConfig.class})
+@WebMvcTest(RoleController.class)
 @AutoConfigureMockMvc
 class IntegrationTest {
 
@@ -31,67 +37,31 @@ class IntegrationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Autowired
+    @MockBean
     private UserRepository userRepository;
 
-    @Autowired
-    private CountryRepository countryRepository;
+    @MockBean
+    private RoleRepository roleRepository;
 
-    @Autowired
-    private WebApplicationContext context;
+    @MockBean
+    private ModelMapper modelMapper;
 
-    @BeforeEach
-    public void setup() {
-        mockMvc = MockMvcBuilders
-                .webAppContextSetup(context)
-                .apply(springSecurity())
-                .build();
-    }
 
+    @WithMockUser(roles = {"ADMIN"})
     @Test
-    void entityRegistrationWorksThroughAllLayers() throws Exception {
+    void createRoleShouldReturnResponseCode201() throws Exception{
+        RoleEntity roleEntity = new RoleEntity().setRole("ADMIN").setId(1L);
 
-        UserEntity entity = new UserEntity("frege",
-                "eriksson",
-                "frege",
-                "123",
-                "test@test.se",
-                new RoleEntity());
+        Role role = new Role().setRoleName("ADMIN").setId(1L);
 
-        mockMvc.perform(post("/users/signup", 42L)
-                        .contentType("application/json")
-                        .content(objectMapper.writeValueAsString(entity)))
+        when(modelMapper.map(any(Role.class), RoleEntity.class)).thenReturn(roleEntity);
+        when(roleRepository.save(roleEntity)).thenReturn(roleEntity);
+        when(modelMapper.map(any(RoleEntity.class), Role.class)).thenReturn(role);
+
+        mockMvc.perform(post("/roles")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(role)))
                 .andExpect(status().isCreated());
-
-        UserEntity userEntity = userRepository.findByUsername("frege");
-        assertThat(userEntity.getEmail()).isEqualTo("test@test.se");
-    }
-
-    @WithMockUser("spring")
-    @Test
-    void countryEntityRegistrationWorksThroughAllLayers() throws Exception {
-
-        GrapeEntity grape = new GrapeEntity();
-        WineEntity wine = new WineEntity();
-        wine.setGrape(grape);
-        wine.setName("wineTest");
-        grape.setName("grapeTest");
-        grape.setColor("colorTest");
-
-        CountryEntity entity = new CountryEntity();
-
-        entity.setId(1L);
-        entity.setName("countryTest");
-        entity.addGrape(grape);
-        entity.addWine(wine);
-
-        mockMvc.perform(post("/countries", 42L)
-                        .contentType("application/json")
-                        .content(objectMapper.writeValueAsString(entity)))
-                .andExpect(status().isCreated());
-
-        CountryEntity CountryEntity = countryRepository.findByName("Frankrike");
-        assertThat(CountryEntity.getName()).isEqualTo("Frankrike");
 
     }
 

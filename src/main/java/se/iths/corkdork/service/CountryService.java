@@ -35,6 +35,10 @@ public class CountryService {
     @Transactional
     public void updateCountry(Long id, Country country) {
 
+        Optional<CountryEntity> foundCountry = countryRepository.findById(id);
+        if (foundCountry.isEmpty())
+            throw new se.iths.corkdork.exception.EntityNotFoundException("No country with id "+id+" was found.");
+
         CountryEntity countryEntity = modelMapper.map(country, CountryEntity.class);
 
         countryEntity.setId(id);
@@ -45,6 +49,9 @@ public class CountryService {
 
     public Country findCountryById(Long id) {
         Optional<CountryEntity> foundCountry = countryRepository.findById(id);
+
+        if (foundCountry.isEmpty())
+            throw new se.iths.corkdork.exception.EntityNotFoundException("No country with id "+id+" was found.");
 
         return modelMapper.map(foundCountry.get(), Country.class);
     }

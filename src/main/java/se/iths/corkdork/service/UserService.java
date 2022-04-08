@@ -77,7 +77,8 @@ public class UserService {
 
     public void deleteUser(Long id) {
 
-        UserEntity foundUser = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        UserEntity foundUser = userRepository.findById(id).orElseThrow(javax.persistence.EntityNotFoundException::new);
+
         userRepository.deleteById(foundUser.getId());
     }
 }

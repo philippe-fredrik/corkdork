@@ -37,7 +37,7 @@ public class CountryController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Country> updateCountry(@PathVariable Long id, @RequestBody Country country, BindingResult errors){
+    public ResponseEntity<Country> updateCountry(@PathVariable Long id, @Validated @RequestBody Country country, BindingResult errors){
 
         if (errors.hasErrors())
             throw new EntityNotFoundException(notFound(id));

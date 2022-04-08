@@ -24,10 +24,6 @@ public class CountryEntity {
                 orphanRemoval = true)
     private Set<GrapeEntity> grapes = new HashSet<>();
 
-   
-    public CountryEntity() {
-    }
-
     public void addWine(WineEntity wine) {
         wines.add(wine);
         wine.setCountry(this);
@@ -42,16 +38,18 @@ public class CountryEntity {
         return id;
     }
 
-    public void setId(Long id) {
+    public CountryEntity setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public CountryEntity setName(String name) {
         this.name = name;
+        return this;
     }
 
     @JsonIgnore
@@ -59,16 +57,18 @@ public class CountryEntity {
         return wines;
     }
 
-    public void setWines(Set<WineEntity> wines) {
+    public CountryEntity setWines(Set<WineEntity> wines) {
         this.wines = wines;
+        return this;
     }
     @JsonIgnore
     public Set<GrapeEntity> getGrapes() {
         return grapes;
     }
 
-    public void setGrapes(Set<GrapeEntity> grapes) {
+    public CountryEntity setGrapes(Set<GrapeEntity> grapes) {
         this.grapes = grapes;
+        return this;
     }
 
 

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import se.iths.corkdork.repository.RoleRepository;
 import se.iths.corkdork.repository.UserRepository;
 import se.iths.corkdork.exception.EntityNotFoundException;
-
 import java.util.Optional;
 
 @Service
@@ -20,6 +19,8 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
+    private static final String NOUSERID = "No user with id ";
+    private static final String WASFOUND = " was found";
 
     public UserService(UserRepository userRepository,
                        RoleRepository roleRepository,
@@ -47,7 +48,7 @@ public class UserService {
 
         Optional<UserEntity> foundUser = userRepository.findById(id);
         if (foundUser.isEmpty())
-            throw new EntityNotFoundException("No user with id "+id+" was found.");
+            throw new EntityNotFoundException(NOUSERID+ id + WASFOUND);
 
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
 
@@ -62,7 +63,7 @@ public class UserService {
 
         Optional<UserEntity> foundUser = userRepository.findById(id);
         if (foundUser.isEmpty())
-            throw new EntityNotFoundException("No user with id "+id+" was found.");
+            throw new EntityNotFoundException(NOUSERID+ id +WASFOUND);
 
         return modelMapper.map(foundUser.get(), User.class);
     }
@@ -77,8 +78,10 @@ public class UserService {
 
     public void deleteUser(Long id) {
 
-        UserEntity foundUser = userRepository.findById(id).orElseThrow(javax.persistence.EntityNotFoundException::new);
+        Optional<UserEntity> foundUser = userRepository.findById(id);
+        if (foundUser.isEmpty())
+            throw new EntityNotFoundException(NOUSERID+ id +WASFOUND);
 
-        userRepository.deleteById(foundUser.getId());
+        userRepository.deleteById(id);
     }
 }

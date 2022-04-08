@@ -12,10 +12,21 @@ A Spring Boot application for storing wines in a MYSQL database acting as your w
  - MySQL
 
 # Project Setup
-ADD INSTRUCTIONS HERE
+
+1. Download [Docker.](https://www.docker.com/products/docker-desktop) <br/>
+
+2. Clone this [repository](https://github.com/philippe-fredrik/corkdork)
+   by following [this article.](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
+
+3. Run the command below in CMD which will create 2 containers, 1 for the application and 1 for RabbitMQ: <br/>
+docker-compose build --up
+
+After following these steps you should be able to run the application.
 
 # Endpoints
-Access here: http://localhost:8080/api/
+Access here: http://localhost:8080
+# Endpoints
+Access here: http://localhost:8080
 
 |Account|Role|Password|
 | :--- | :--- | :--- |

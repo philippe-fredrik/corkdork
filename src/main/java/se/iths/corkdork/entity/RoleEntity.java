@@ -25,10 +25,6 @@ public class RoleEntity {
     public RoleEntity() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public void addUser(UserEntity user) {
         users.add(user);
     }

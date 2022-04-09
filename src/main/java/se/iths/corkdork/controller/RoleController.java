@@ -7,10 +7,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import se.iths.corkdork.dtos.Role;
+import se.iths.corkdork.entity.RoleEntity;
+
 import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.RoleService;
-
 import java.util.List;
 
 
@@ -23,7 +24,6 @@ public class RoleController {
 
     public RoleController(RoleService roleService) {
         this.roleService = roleService;
-
     }
 
     @PostMapping("")
@@ -47,7 +47,6 @@ public class RoleController {
     @GetMapping()
     public ResponseEntity<List<Role>> findAllRoles() {
         List<Role> roles = roleService.findAllRoles();
-
         return new ResponseEntity<>(roles, HttpStatus.OK);
     }
 
@@ -55,10 +54,9 @@ public class RoleController {
     public ResponseEntity<Role> updateRole(@Validated @PathVariable Long id, @RequestBody Role role,BindingResult errors) {
         if (errors.hasErrors())
             throw new EntityNotFoundException(notFound(id));
-
         roleService.updateRole(id, role);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(allRoles, HttpStatus.OK);
     }
 
 

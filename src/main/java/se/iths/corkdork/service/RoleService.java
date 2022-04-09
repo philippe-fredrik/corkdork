@@ -9,6 +9,7 @@ import se.iths.corkdork.repository.RoleRepository;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Optional;
 
 @Service
@@ -34,6 +35,7 @@ public class RoleService {
         Optional<RoleEntity> foundRole = roleRepository.findById(id);
         if(foundRole.isEmpty())
             throw new se.iths.corkdork.exception.EntityNotFoundException("Role with ID: " + id + " was not found");
+
         return modelMapper.map(foundRole, Role.class);
     }
 
@@ -55,6 +57,7 @@ public class RoleService {
 
     public void deleteRole(Long id) {
         RoleEntity foundRole = roleRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+
         roleRepository.deleteById(foundRole.getId());
     }
 }

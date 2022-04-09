@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.codehaus.groovy.runtime.DefaultGroovyMethods.any;
 
@@ -126,4 +127,21 @@ class IntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
     }
+
+    @Test
+    void findAllRolesWhenNotSignedInReturns401Unauthorized() throws Exception {
+        when(roleRepository.findAll()).thenReturn(List.of());
+        mockMvc.perform(get("/roles").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @WithMockUser
+    @Test
+    void findAllRolesWhenNotSignedInAsUserReturns403Forbidden() throws Exception {
+        when(roleRepository.findAll()).thenReturn(List.of());
+        mockMvc.perform(get("/roles").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
+
 }

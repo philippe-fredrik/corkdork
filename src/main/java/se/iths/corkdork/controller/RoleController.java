@@ -4,9 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import se.iths.corkdork.dtos.Role;
 import se.iths.corkdork.exception.BadRequestException;
+import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.RoleService;
 
 import java.util.List;
@@ -25,9 +27,9 @@ public class RoleController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Role> createRole(@RequestBody Role role, BindingResult errors) {
+    public ResponseEntity<Role> createRole(@Validated @RequestBody Role role, BindingResult errors) {
         if (errors.hasErrors())
-            throw new BadRequestException("Role field is mandatory", errors);
+            throw new BadRequestException("Invalid input", errors);
 
         Role createdRole = roleService.createRole(role);
 
@@ -50,7 +52,9 @@ public class RoleController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Role> updateRole(@PathVariable Long id, @RequestBody Role role) {
+    public ResponseEntity<Role> updateRole(@Validated @PathVariable Long id, @RequestBody Role role,BindingResult errors) {
+        if (errors.hasErrors())
+            throw new EntityNotFoundException(notFound(id));
 
         roleService.updateRole(id, role);
 
@@ -63,5 +67,9 @@ public class RoleController {
         roleService.deleteRole(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    private String notFound(Long id) {
+        return "Role with ID: " + id + " was not found.";
     }
 }

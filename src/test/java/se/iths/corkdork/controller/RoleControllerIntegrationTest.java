@@ -1,4 +1,4 @@
-package se.iths.corkdork;
+package se.iths.corkdork.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import se.iths.corkdork.controller.RoleController;
 import se.iths.corkdork.dtos.Role;
 import se.iths.corkdork.entity.*;
 import se.iths.corkdork.repository.RoleRepository;
@@ -24,7 +23,6 @@ import java.util.List;
 import java.util.Optional;
 
 
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.codehaus.groovy.runtime.DefaultGroovyMethods.any;
 
@@ -38,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import({RoleService.class, SecurityConfig.class})
 @WebMvcTest(RoleController.class)
 @AutoConfigureMockMvc
-class IntegrationTest {
+class RoleControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;

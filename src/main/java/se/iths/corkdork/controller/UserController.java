@@ -11,7 +11,6 @@ import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.messaging.MessagePublisher;
 import se.iths.corkdork.service.UserService;
 
-
 @RestController
 @RequestMapping("users")
 public class UserController {
@@ -36,7 +35,10 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @Validated @RequestBody User user, BindingResult errors) {
+
+        if (errors.hasErrors())
+            throw new EntityNotFoundException(notFound(id));
 
         userService.updateUser(id, user);
 
@@ -59,6 +61,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+
     @GetMapping("")
     public ResponseEntity<Iterable<User>> findAllUsers() {
 
@@ -69,6 +72,10 @@ public class UserController {
 
         return new ResponseEntity<>(allUserEntities, HttpStatus.OK);
 
+    }
+
+    private String notFound(Long id) {
+        return "User with ID: " + id + " was not found.";
     }
 
 }

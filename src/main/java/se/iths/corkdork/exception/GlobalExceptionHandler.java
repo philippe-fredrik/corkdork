@@ -22,6 +22,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     protected ResponseEntity<Object> handleRestrictedMethod(RestrictedMethodException ex) {
+
+        logger.error(ex.getMessage());
+
         ApiError apiError = new ApiError(METHOD_NOT_ALLOWED);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
@@ -29,6 +32,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
+
+        logger.error(ex.getMessage());
+
         ApiError apiError = new ApiError(NOT_FOUND);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
@@ -36,6 +42,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     protected ResponseEntity<Object> handleBadRequest(BadRequestException ex) {
+
+        logger.error(ex.getMessage());
+
         ApiError apiError = new ApiError(BAD_REQUEST);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
@@ -52,12 +61,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatus status,
             @NotNull
             WebRequest request) {
+
+        logger.error(ex.getMessage());
+
         String error = "Malformed JSON request";
         return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, error, ex));
     }
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
+
+        logger.error(ex.getMessage());
+
         String errorMessage = "An unexpected error occurred.";
 
         return buildResponseEntity(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, ex));

@@ -25,24 +25,26 @@ public class RoleEntity {
     public RoleEntity() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public void addUser(UserEntity user) {
         users.add(user);
     }
 
-    public void setId(Long id) {
+    public Long getId() {
+        return id;
+    }
+
+    public RoleEntity setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public RoleEntity setRole(String role) {
         this.role = role;
+        return this;
     }
 
     @JsonIgnore

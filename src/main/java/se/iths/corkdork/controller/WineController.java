@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.WineService;
-import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("wines")
@@ -34,7 +33,10 @@ public class WineController {
 
 
     @PutMapping("{id}")
-    public ResponseEntity<Wine> updateWine(@PathVariable Long id, @RequestBody Wine wine) {
+    public ResponseEntity<Wine> updateWine(@PathVariable Long id, @RequestBody Wine wine, BindingResult errors) {
+
+        if (errors.hasErrors())
+            throw new EntityNotFoundException(notFound(id));
 
         wineService.updateWine(id, wine);
 
@@ -66,14 +68,10 @@ public class WineController {
             throw new EntityNotFoundException("Failed to find any wines.");
 
         return new ResponseEntity<>(allWinesEntities, HttpStatus.OK);
+
     }
 
-    @GetMapping("getbyname={name}")
-    public CompletableFuture<Wine> findWineByName(@PathVariable String name) throws InterruptedException {
-
-        Wine wine = wineService.findWineByName(name);
-
-        Thread.sleep(5000L);
-        return CompletableFuture.completedFuture(wine);
+    private String notFound(Long id) {
+        return "User with ID: " + id + " was not found.";
     }
 }

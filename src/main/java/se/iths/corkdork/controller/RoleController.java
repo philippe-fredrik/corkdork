@@ -6,10 +6,10 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import se.iths.corkdork.dtos.Role;
-import se.iths.corkdork.entity.RoleEntity;
 import se.iths.corkdork.exception.BadRequestException;
-import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.RoleService;
+
+import java.util.List;
 
 
 @RestController
@@ -43,14 +43,10 @@ public class RoleController {
     }
 
     @GetMapping()
-    public ResponseEntity<Iterable<RoleEntity>> findAllRoles() {
-        Iterable<RoleEntity> allRoles = roleService.findAllRoles();
+    public ResponseEntity<List<Role>> findAllRoles() {
+        List<Role> roles = roleService.findAllRoles();
 
-        if (!allRoles.iterator().hasNext()) {
-            throw new EntityNotFoundException("There are no roles registered in the database");
-        }
-
-        return new ResponseEntity<>(allRoles, HttpStatus.OK);
+        return new ResponseEntity<>(roles, HttpStatus.OK);
     }
 
     @PutMapping("{id}")

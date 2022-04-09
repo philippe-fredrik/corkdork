@@ -7,6 +7,8 @@ import se.iths.corkdork.entity.RoleEntity;
 import se.iths.corkdork.repository.RoleRepository;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,8 +37,14 @@ public class RoleService {
         return modelMapper.map(foundRole, Role.class);
     }
 
-    public Iterable<RoleEntity> findAllRoles() {
-        return roleRepository.findAll();
+    public List<Role> findAllRoles() {
+        Iterable<RoleEntity> allRoles = roleRepository.findAll();
+        if (!allRoles.iterator().hasNext()) {
+            throw new se.iths.corkdork.exception.EntityNotFoundException("Failed to find any roles");
+        }
+        List<Role> roles = new ArrayList<>();
+        allRoles.forEach(role -> roles.add(modelMapper.map(role, Role.class)));
+        return roles;
     }
 
     public void updateRole(Long id, Role role) {

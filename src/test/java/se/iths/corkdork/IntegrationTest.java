@@ -13,25 +13,21 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import se.iths.corkdork.controller.RoleController;
 import se.iths.corkdork.dtos.Role;
 import se.iths.corkdork.entity.*;
-import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.repository.RoleRepository;
-import se.iths.corkdork.repository.UserRepository;
 import se.iths.corkdork.security.SecurityConfig;
 import se.iths.corkdork.service.RoleService;
 
+import java.util.List;
 import java.util.Optional;
 
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.hasSize;
 import static org.codehaus.groovy.runtime.DefaultGroovyMethods.any;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doThrow;
+
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -48,9 +44,6 @@ class IntegrationTest {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @MockBean
-    private UserRepository userRepository;
 
     @MockBean
     private RoleRepository roleRepository;
@@ -94,7 +87,7 @@ class IntegrationTest {
 
     @WithMockUser(roles = {"ADMIN"})
     @Test
-    void findRoleByIdWithIdNotFoundShouldThrowEntityNotFoundException() throws Exception {
+    void findRoleByIdWithIdNotFoundShouldReturnStatusNotFoundAndErrorMessage() throws Exception {
         final Long id = 1L;
         final Long idNotUsed = 2L;
         RoleEntity roleEntity = new RoleEntity().setRole("ADMIN").setId(id);
@@ -109,4 +102,28 @@ class IntegrationTest {
                 .andExpect(jsonPath("message").value("Role with ID: " + idNotUsed + " was not found"));
     }
 
+    @WithMockUser(roles = {"ADMIN"})
+    @Test
+    void findAllRolesShouldReturnStatusNotFoundAndErrorMessage() throws Exception {
+        when(roleRepository.findAll()).thenReturn(List.of());
+
+        mockMvc.perform(get("/roles").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("message").value("Failed to find any roles"));
+    }
+
+    @WithMockUser(roles = {"ADMIN"})
+    @Test
+    void findAllRolesShouldReturnStatusOkAndCheckIfRolesSizeIs2() throws Exception {
+        Iterable<RoleEntity> roleEntities = List.of(
+                new RoleEntity().setRole("ADMIN"),
+                new RoleEntity().setRole("USER"));
+
+        when(roleRepository.findAll()).thenReturn(roleEntities);
+        when(modelMapper.map(any(RoleEntity.class), Role.class)).thenReturn(new Role().setRoleName("ADMIN"));
+
+        mockMvc.perform(get("/roles").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)));
+    }
 }

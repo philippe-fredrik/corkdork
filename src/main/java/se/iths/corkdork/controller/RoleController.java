@@ -7,7 +7,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import se.iths.corkdork.dtos.Role;
-import se.iths.corkdork.entity.RoleEntity;
 
 import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
@@ -56,7 +55,7 @@ public class RoleController {
             throw new EntityNotFoundException(notFound(id));
         roleService.updateRole(id, role);
 
-        return new ResponseEntity<>(allRoles, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

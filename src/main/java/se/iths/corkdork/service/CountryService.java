@@ -54,7 +54,7 @@ public class CountryService {
         if (foundCountry.isEmpty())
             throw new EntityNotFoundException(NOCOUNTRYID+id+WASFOUND);
 
-        return modelMapper.map(foundCountry.get(), Country.class);
+        return modelMapper.map(foundCountry, Country.class);
     }
 
     public Iterable<Country> findAllCountries() {

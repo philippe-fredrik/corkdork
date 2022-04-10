@@ -51,7 +51,7 @@ public class GrapeService {
         if (foundGrape.isEmpty())
             throw new EntityNotFoundException(NOGRAPEID+id+WASFOUND);
 
-        return modelMapper.map(foundGrape.get(), Grape.class);
+        return modelMapper.map(foundGrape, Grape.class);
     }
 
    public Iterable<Grape> getAllGrapes() {

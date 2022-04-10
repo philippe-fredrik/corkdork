@@ -33,7 +33,7 @@ public class WineController {
 
 
     @PutMapping("{id}")
-    public ResponseEntity<Wine> updateWine(@PathVariable Long id, @RequestBody Wine wine, BindingResult errors) {
+    public ResponseEntity<Wine> updateWine(@PathVariable Long id, @Validated @RequestBody Wine wine, BindingResult errors) {
 
         if (errors.hasErrors())
             throw new EntityNotFoundException(notFound(id));

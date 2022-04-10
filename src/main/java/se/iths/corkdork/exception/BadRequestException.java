@@ -4,11 +4,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BadRequestException extends RuntimeException{
 
-    private final BindingResult errors;
+    private final transient BindingResult errors;
 
     public BadRequestException(String message, BindingResult errors) {
         super(message);
@@ -28,7 +27,7 @@ public class BadRequestException extends RuntimeException{
         return bindingResult.getAllErrors()
                 .stream()
                 .map(BadRequestException::getValidationMessage)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private static String getValidationMessage(ObjectError error) {

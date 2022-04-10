@@ -8,7 +8,7 @@ import se.iths.corkdork.entity.CountryEntity;
 import se.iths.corkdork.entity.GrapeEntity;
 import org.springframework.stereotype.Service;
 import se.iths.corkdork.repository.GrapeRepository;
-import javax.persistence.EntityNotFoundException;
+import se.iths.corkdork.exception.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -16,6 +16,8 @@ public class GrapeService {
 
     private final GrapeRepository grapeRepository;
     private final ModelMapper modelMapper;
+    private static final String NOGRAPEID = "No grape with id ";
+    private static final String WASFOUND = " was found";
 
     public GrapeService(GrapeRepository grapeRepository, ModelMapper modelMapper) {
         this.grapeRepository = grapeRepository;
@@ -32,6 +34,10 @@ public class GrapeService {
 
     public void updateGrape(Long id, Grape grape) {
 
+        Optional<GrapeEntity> foundGrape = grapeRepository.findById(id);
+        if (foundGrape.isEmpty())
+            throw new EntityNotFoundException(NOGRAPEID+id+WASFOUND);
+
         GrapeEntity grapeEntity = modelMapper.map(grape, GrapeEntity.class);
 
         grapeEntity.setId(id);
@@ -42,7 +48,10 @@ public class GrapeService {
     public Grape findById(Long id) {
         Optional<GrapeEntity> foundGrape = grapeRepository.findById(id);
 
-        return modelMapper.map(foundGrape.get(), Grape.class);
+        if (foundGrape.isEmpty())
+            throw new EntityNotFoundException(NOGRAPEID+id+WASFOUND);
+
+        return modelMapper.map(foundGrape, Grape.class);
     }
 
    public Iterable<Grape> getAllGrapes() {
@@ -53,8 +62,11 @@ public class GrapeService {
    }
 
    public void deleteGrape(Long id) {
-        GrapeEntity foundGrape = grapeRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        grapeRepository.deleteById(foundGrape.getId());
+       Optional<GrapeEntity> foundGrape = grapeRepository.findById(id);
+       if (foundGrape.isEmpty())
+           throw new EntityNotFoundException(NOGRAPEID+ id +WASFOUND);
+
+        grapeRepository.deleteById(id);
    }
 
 

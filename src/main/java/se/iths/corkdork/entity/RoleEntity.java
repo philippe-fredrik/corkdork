@@ -29,10 +29,6 @@ public class RoleEntity {
         users.add(user);
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public RoleEntity setId(Long id) {
         this.id = id;
         return this;
@@ -54,5 +50,9 @@ public class RoleEntity {
 
     public void setUsers(Set<UserEntity> users) {
         this.users = users;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

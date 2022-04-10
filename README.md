@@ -10,6 +10,7 @@ A Spring Boot application for storing wines in a MYSQL database acting as your w
  - Maven
  - Hibernate
  - MySQL
+ - RabbitMQ
 
 # Project Setup
 
@@ -22,6 +23,7 @@ A Spring Boot application for storing wines in a MYSQL database acting as your w
 docker-compose build --up
 
 After following these steps you should be able to run the application.
+The application generates sample data to the database on startup.
 
 # Endpoints
 Access here: http://localhost:8080

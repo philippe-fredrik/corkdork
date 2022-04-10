@@ -56,7 +56,7 @@ class RoleControllerIntegrationTest {
     void createRoleShouldReturnResponseCode201() throws Exception {
         RoleEntity roleEntity = new RoleEntity().setRole("ADMIN").setId(1L);
 
-        Role role = new Role().setRoleName("ADMIN").setId(1L);
+        Role role = new Role().setRole("ADMIN").setId(1L);
 
         when(modelMapper.map(any(Role.class), RoleEntity.class)).thenReturn(roleEntity);
         when(roleRepository.save(roleEntity)).thenReturn(roleEntity);
@@ -119,7 +119,7 @@ class RoleControllerIntegrationTest {
                 new RoleEntity().setRole("USER"));
 
         when(roleRepository.findAll()).thenReturn(roleEntities);
-        when(modelMapper.map(any(RoleEntity.class), Role.class)).thenReturn(new Role().setRoleName("ADMIN"));
+        when(modelMapper.map(any(RoleEntity.class), Role.class)).thenReturn(new Role().setRole("ADMIN"));
 
         mockMvc.perform(get("/roles").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

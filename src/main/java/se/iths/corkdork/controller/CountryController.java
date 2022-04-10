@@ -13,6 +13,8 @@ import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.CountryService;
 import se.iths.corkdork.service.WineService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("countries")
 public class CountryController {
@@ -64,14 +66,14 @@ public class CountryController {
     }
 
     @GetMapping()
-    public ResponseEntity<Iterable<Country>> findAllCountries() {
+    public ResponseEntity<List<Country>> findAllCountries() {
 
-        Iterable<Country> allCountryEntities = countryService.findAllCountries();
+        List<Country> countries = countryService.findAllCountries();
 
-        if (!allCountryEntities.iterator().hasNext())
+        if (countries.isEmpty())
             throw new EntityNotFoundException("Failed to find any countries.");
 
-        return new ResponseEntity<>(allCountryEntities, HttpStatus.OK);
+        return new ResponseEntity<>(countries, HttpStatus.OK);
     }
        
     @PostMapping("/{name}/{id}")

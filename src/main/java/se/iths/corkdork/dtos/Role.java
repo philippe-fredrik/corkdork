@@ -2,7 +2,7 @@ package se.iths.corkdork.dtos;
 
 public class Role {
     private Long id;
-    private String roleName;
+    private String role;
 
     public Long getId() {
         return id;
@@ -13,12 +13,12 @@ public class Role {
         return this;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getRole() {
+        return role;
     }
 
-    public Role setRoleName(String roleName) {
-        this.roleName = roleName;
+    public Role setRole(String role) {
+        this.role = role;
         return this;
     }
 

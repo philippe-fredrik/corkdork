@@ -33,7 +33,7 @@ class RoleServiceTest {
 
     @Test
     void createShouldReturnCreatedRole() {
-        Role role = new Role().setRoleName("ROLE_TEST").setId(1L);
+        Role role = new Role().setRole("ROLE_TEST").setId(1L);
 
         when(roleService.createRole(role)).thenReturn(role);
 
@@ -46,8 +46,8 @@ class RoleServiceTest {
     @Test
     void findByIdShouldReturnOptionalRoleWithIdOne() {
         RoleEntity roleEntity = new RoleEntity();
-        Role role = new Role().setRoleName("ROLE_TEST").setId(1L);
-        role.setRoleName("ROLE_TEST").setId(1L);
+        Role role = new Role().setRole("ROLE_TEST").setId(1L);
+        role.setRole("ROLE_TEST").setId(1L);
 
         when(modelMapper.map(any(), any())).thenReturn(role);
         when(roleRepository.findById(role.getId())).thenReturn(Optional.of(roleEntity));
@@ -88,7 +88,7 @@ class RoleServiceTest {
 
     @Test
     void updateRoleShouldReturnRoleWithNewRoleUser() {
-        Role role = new Role().setRoleName("TEST_ROLE").setId(1L);
+        Role role = new Role().setRole("TEST_ROLE").setId(1L);
         roleService.updateRole(role.getId(), role);
 
         RoleEntity roleEntity = modelMapper.map(role, RoleEntity.class);

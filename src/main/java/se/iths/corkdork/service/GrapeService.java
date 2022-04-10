@@ -1,7 +1,6 @@
 package se.iths.corkdork.service;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import se.iths.corkdork.dtos.Country;
 import se.iths.corkdork.dtos.Grape;
 import se.iths.corkdork.entity.CountryEntity;
@@ -9,6 +8,9 @@ import se.iths.corkdork.entity.GrapeEntity;
 import org.springframework.stereotype.Service;
 import se.iths.corkdork.repository.GrapeRepository;
 import se.iths.corkdork.exception.EntityNotFoundException;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,11 +56,12 @@ public class GrapeService {
         return modelMapper.map(foundGrape, Grape.class);
     }
 
-   public Iterable<Grape> getAllGrapes() {
+   public List<Grape> getAllGrapes() {
        Iterable<GrapeEntity> allGrapeEntities = grapeRepository.findAll();
 
-       return modelMapper.map(allGrapeEntities, new TypeToken<Iterable<Grape>>() {
-       }.getType());
+       List<Grape> allGrapes = new ArrayList<>();
+       allGrapeEntities.forEach(grape -> allGrapes.add(modelMapper.map(grape, Grape.class)));
+       return allGrapes;
    }
 
    public void deleteGrape(Long id) {

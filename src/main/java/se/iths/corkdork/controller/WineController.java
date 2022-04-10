@@ -10,6 +10,8 @@ import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.WineService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("wines")
 public class WineController {
@@ -60,14 +62,14 @@ public class WineController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Iterable<Wine>> findAllWines() {
+    public ResponseEntity<List<Wine>> findAllWines() {
 
-        Iterable<Wine> allWinesEntities = wineService.findAllWines();
+        List<Wine> wines = wineService.findAllWines();
 
-        if (!allWinesEntities.iterator().hasNext())
+        if (wines.isEmpty())
             throw new EntityNotFoundException("Failed to find any wines.");
 
-        return new ResponseEntity<>(allWinesEntities, HttpStatus.OK);
+        return new ResponseEntity<>(wines, HttpStatus.OK);
 
     }
 

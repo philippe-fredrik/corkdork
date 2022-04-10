@@ -45,12 +45,16 @@ public class RoleController {
 
     @GetMapping()
     public ResponseEntity<List<Role>> findAllRoles() {
+
         List<Role> roles = roleService.findAllRoles();
+        if(roles.isEmpty())
+            throw new EntityNotFoundException("Failed to find any roles");
+
         return new ResponseEntity<>(roles, HttpStatus.OK);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Role> updateRole(@Validated @PathVariable Long id, @RequestBody Role role,BindingResult errors) {
+    public ResponseEntity<Role> updateRole(@Validated @PathVariable Long id, @RequestBody Role role, BindingResult errors) {
         if (errors.hasErrors())
             throw new EntityNotFoundException(notFound(id));
         roleService.updateRole(id, role);

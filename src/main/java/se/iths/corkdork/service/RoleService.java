@@ -41,9 +41,7 @@ public class RoleService {
 
     public List<Role> findAllRoles() {
         Iterable<RoleEntity> allRoles = roleRepository.findAll();
-        if (!allRoles.iterator().hasNext()) {
-            throw new se.iths.corkdork.exception.EntityNotFoundException("Failed to find any roles");
-        }
+
         List<Role> roles = new ArrayList<>();
         allRoles.forEach(role -> roles.add(modelMapper.map(role, Role.class)));
         return roles;

@@ -1,7 +1,6 @@
 package se.iths.corkdork.service;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import se.iths.corkdork.dtos.User;
 import se.iths.corkdork.entity.RoleEntity;
@@ -10,6 +9,9 @@ import org.springframework.stereotype.Service;
 import se.iths.corkdork.repository.RoleRepository;
 import se.iths.corkdork.repository.UserRepository;
 import se.iths.corkdork.exception.EntityNotFoundException;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -67,12 +69,12 @@ public class UserService {
         return modelMapper.map(foundUser, User.class);
     }
 
-    public Iterable<User> findAllUsers() {
-
+    public List<User> findAllUsers() {
         Iterable<UserEntity> allUserEntities = userRepository.findAll();
 
-        return modelMapper.map(allUserEntities, new TypeToken<Iterable<User>>() {
-        }.getType());
+        List<User> allUsers = new ArrayList<>();
+        allUserEntities.forEach(user -> allUsers.add(modelMapper.map(user, User.class)));
+        return allUsers;
     }
 
     public void deleteUser(Long id) {

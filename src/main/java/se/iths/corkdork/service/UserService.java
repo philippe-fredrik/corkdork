@@ -9,8 +9,7 @@ import se.iths.corkdork.entity.UserEntity;
 import org.springframework.stereotype.Service;
 import se.iths.corkdork.repository.RoleRepository;
 import se.iths.corkdork.repository.UserRepository;
-
-import javax.persistence.EntityNotFoundException;
+import se.iths.corkdork.exception.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -20,12 +19,14 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
+    private static final String NOUSERID = "No user with id ";
+    private static final String WASFOUND = " was found";
 
     public UserService(UserRepository userRepository,
                        RoleRepository roleRepository,
                        PasswordEncoder passwordEncoder,
                        ModelMapper modelMapper) {
-      
+
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -45,6 +46,10 @@ public class UserService {
 
     public void updateUser(Long id, User user) {
 
+        Optional<UserEntity> foundUser = userRepository.findById(id);
+        if (foundUser.isEmpty())
+            throw new EntityNotFoundException(NOUSERID+ id + WASFOUND);
+
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
 
         userEntity.setId(id);
@@ -56,6 +61,8 @@ public class UserService {
     public User findUserById(Long id) {
 
         Optional<UserEntity> foundUser = userRepository.findById(id);
+        if (foundUser.isEmpty())
+            throw new EntityNotFoundException(NOUSERID+ id +WASFOUND);
 
         return modelMapper.map(foundUser, User.class);
     }
@@ -70,7 +77,10 @@ public class UserService {
 
     public void deleteUser(Long id) {
 
-        UserEntity foundUser = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        userRepository.deleteById(foundUser.getId());
+        Optional<UserEntity> foundUser = userRepository.findById(id);
+        if (foundUser.isEmpty())
+            throw new EntityNotFoundException(NOUSERID+ id +WASFOUND);
+
+        userRepository.deleteById(id);
     }
 }

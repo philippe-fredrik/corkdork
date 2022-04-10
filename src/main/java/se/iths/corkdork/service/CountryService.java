@@ -9,8 +9,7 @@ import se.iths.corkdork.entity.CountryEntity;
 import org.springframework.stereotype.Service;
 import se.iths.corkdork.entity.WineEntity;
 import se.iths.corkdork.repository.CountryRepository;
-
-import javax.persistence.EntityNotFoundException;
+import se.iths.corkdork.exception.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
@@ -19,6 +18,8 @@ public class CountryService {
 
     private final CountryRepository countryRepository;
     private final ModelMapper modelMapper;
+    private static final String NOCOUNTRYID = "No country with id ";
+    private static final String WASFOUND = " was found";
 
     public CountryService(CountryRepository countryRepository, ModelMapper modelMapper) {
         this.countryRepository = countryRepository;
@@ -35,6 +36,10 @@ public class CountryService {
     @Transactional
     public void updateCountry(Long id, Country country) {
 
+        Optional<CountryEntity> foundCountry = countryRepository.findById(id);
+        if (foundCountry.isEmpty())
+            throw new EntityNotFoundException(NOCOUNTRYID+id+WASFOUND);
+
         CountryEntity countryEntity = modelMapper.map(country, CountryEntity.class);
 
         countryEntity.setId(id);
@@ -45,6 +50,9 @@ public class CountryService {
 
     public Country findCountryById(Long id) {
         Optional<CountryEntity> foundCountry = countryRepository.findById(id);
+
+        if (foundCountry.isEmpty())
+            throw new EntityNotFoundException(NOCOUNTRYID+id+WASFOUND);
 
         return modelMapper.map(foundCountry.get(), Country.class);
     }
@@ -59,8 +67,12 @@ public class CountryService {
     }
 
     public void deleteCountry(Long id) {
-        CountryEntity foundCountry = countryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        countryRepository.deleteById(foundCountry.getId());
+
+        Optional<CountryEntity> foundCountry = countryRepository.findById(id);
+        if (foundCountry.isEmpty())
+            throw new EntityNotFoundException(NOCOUNTRYID+id+WASFOUND);
+
+        countryRepository.deleteById(id);
     }
 
     public CountryEntity addWine(String name, Wine wine) {

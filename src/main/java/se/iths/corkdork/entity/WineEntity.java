@@ -22,16 +22,18 @@ public class WineEntity {
         return id;
     }
 
-    public void setId(Long id) {
+    public WineEntity setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public WineEntity setName(String name) {
         this.name = name;
+        return this;
     }
 
     @JsonIgnore

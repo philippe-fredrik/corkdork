@@ -42,13 +42,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
 
-        userService.deleteUser(id);
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 
     @GetMapping("{id}")
     public ResponseEntity<User> findUserById(@PathVariable Long id) {
@@ -69,6 +63,14 @@ public class UserController {
 
         return new ResponseEntity<>(allUserEntities, HttpStatus.OK);
 
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+
+        userService.deleteUser(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     private String notFound(Long id) {

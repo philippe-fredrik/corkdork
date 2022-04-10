@@ -45,7 +45,6 @@ class RoleServiceTest {
 
     @Test
     void findByIdShouldReturnOptionalRoleWithIdOne() {
-        //RoleEntity roleEntity = modelMapper.map(role, RoleEntity.class);
         RoleEntity roleEntity = new RoleEntity();
         Role role = new Role().setRoleName("ROLE_TEST").setId(1L);
         role.setRoleName("ROLE_TEST").setId(1L);
@@ -68,10 +67,8 @@ class RoleServiceTest {
         );
 
         when(roleRepository.findAll()).thenReturn(roles);
-
-        Iterable<RoleEntity> foundRoles = roleService.findAllRoles();
-
-        assertThat(foundRoles).isEqualTo(roles);
+        roleService.findAllRoles();
+        verify(roleRepository, times(1)).findAll();
 
     }
 

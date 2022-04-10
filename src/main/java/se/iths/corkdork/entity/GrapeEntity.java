@@ -21,29 +21,36 @@ public class GrapeEntity {
     @ManyToOne
     CountryEntity country;
 
+    public void addWines(WineEntity wine) {
+        wines.add(wine);
+        wine.setGrape(this);
+    }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public GrapeEntity setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public GrapeEntity setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public GrapeEntity setColor(String color) {
         this.color = color;
+        return this;
     }
 
     public Set<WineEntity> getWines() {
@@ -58,7 +65,8 @@ public class GrapeEntity {
         return country;
     }
 
-    public void setCountry(CountryEntity country) {
+    public GrapeEntity setCountry(CountryEntity country) {
         this.country = country;
+        return this;
     }
 }

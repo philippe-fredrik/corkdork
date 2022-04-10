@@ -13,12 +13,14 @@ import java.util.List;
 @Component
 public class SampleDataInitializer implements ApplicationRunner {
 
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final CountryRepository countryRepository;
     private final GrapeRepository grapeRepository;
     private final WineRepository wineRepository;
+
 
     @Autowired
     public SampleDataInitializer(UserRepository userRepository, PasswordEncoder passwordEncoder,
@@ -34,7 +36,6 @@ public class SampleDataInitializer implements ApplicationRunner {
 
     @Transactional
     public void run(ApplicationArguments args) {
-
         RoleEntity adminRole = new RoleEntity("ADMIN");
         RoleEntity userRole = new RoleEntity("USER");
 

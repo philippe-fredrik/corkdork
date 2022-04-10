@@ -24,9 +24,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Test Reporter
-      - uses: dorny/test-reporter@v1.5.0
-
       - name: Log in to the Container registry
         uses: docker/login-action@dd4fa0671be5250ee6f50aedf4cb05514abda2c7
         with:

@@ -1,9 +1,7 @@
 package se.iths.corkdork.service;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import se.iths.corkdork.dtos.Country;
-import se.iths.corkdork.dtos.User;
 import se.iths.corkdork.dtos.Wine;
 import se.iths.corkdork.entity.CountryEntity;
 import org.springframework.stereotype.Service;
@@ -11,6 +9,8 @@ import se.iths.corkdork.entity.WineEntity;
 import se.iths.corkdork.repository.CountryRepository;
 import se.iths.corkdork.exception.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -57,11 +57,12 @@ public class CountryService {
         return modelMapper.map(foundCountry, Country.class);
     }
 
-    public Iterable<Country> findAllCountries() {
+    public List<Country> findAllCountries() {
         Iterable<CountryEntity> allCountryEntities = countryRepository.findAll();
 
-        return modelMapper.map(allCountryEntities, new TypeToken<Iterable<User>>() {
-        }.getType());
+        List<Country> countries = new ArrayList<>();
+        allCountryEntities.forEach(country -> countries.add(modelMapper.map(country, Country.class)));
+        return countries;
 
 
     }

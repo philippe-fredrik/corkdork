@@ -2,12 +2,14 @@ package se.iths.corkdork.service;
 
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import se.iths.corkdork.dtos.Wine;
 import se.iths.corkdork.entity.WineEntity;
 import org.springframework.stereotype.Service;
 import se.iths.corkdork.repository.WineRepository;
 import se.iths.corkdork.exception.EntityNotFoundException;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -64,21 +66,12 @@ public class WineService {
         return modelMapper.map(foundWine, Wine.class);
     }
 
-    public Iterable<Wine> findAllWines(){
-
+    public List<Wine> findAllWines(){
         Iterable<WineEntity> allWinesEntities = wineRepository.findAll();
 
-        return modelMapper.map(
-                allWinesEntities,
-                new TypeToken<Iterable<Wine>>() {
-                }.getType());
+        List<Wine> allWines = new ArrayList<>();
+        allWinesEntities.forEach(wine -> allWines.add(modelMapper.map(wine, Wine.class)));
+        return allWines;
     }
 
-    public Wine findWineByName(String name) {
-
-        Optional<WineEntity> foundWine = wineRepository.findByName(name);
-
-        return modelMapper.map(foundWine.get(), Wine.class);
-
-    }
 }

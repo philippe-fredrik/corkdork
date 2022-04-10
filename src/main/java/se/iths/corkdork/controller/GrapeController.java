@@ -13,6 +13,8 @@ import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.service.CountryService;
 import se.iths.corkdork.service.GrapeService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("grapes")
 public class GrapeController {
@@ -63,14 +65,14 @@ public class GrapeController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Iterable<Grape>> findAllGrapes() {
+    public ResponseEntity<List<Grape>> findAllGrapes() {
 
-        Iterable<Grape> allGrapeEntities = grapeService.getAllGrapes();
+        List<Grape> grapes = grapeService.getAllGrapes();
 
-        if (!allGrapeEntities.iterator().hasNext())
+        if (grapes.isEmpty())
             throw new EntityNotFoundException("Failed to find any grapes.");
 
-        return new ResponseEntity<>(allGrapeEntities, HttpStatus.OK);
+        return new ResponseEntity<>(grapes, HttpStatus.OK);
 
     }
 

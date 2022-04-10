@@ -11,6 +11,8 @@ import se.iths.corkdork.exception.EntityNotFoundException;
 import se.iths.corkdork.messaging.MessagePublisher;
 import se.iths.corkdork.service.UserService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("users")
 public class UserController {
@@ -57,14 +59,13 @@ public class UserController {
 
 
     @GetMapping("")
-    public ResponseEntity<Iterable<User>> findAllUsers() {
+    public ResponseEntity<List<User>> findAllUsers() {
+        List<User> users = userService.findAllUsers();
 
-        Iterable<User> allUserEntities = userService.findAllUsers();
+        if(users.isEmpty())
+            throw new EntityNotFoundException("Failed to find any users");
 
-        if (!allUserEntities.iterator().hasNext())
-            throw new EntityNotFoundException("Failed to find any wines.");
-
-        return new ResponseEntity<>(allUserEntities, HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
 
     }
 

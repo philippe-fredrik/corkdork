@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.iths.corkdork.exception.BadRequestException;
 import se.iths.corkdork.exception.EntityNotFoundException;
+import se.iths.corkdork.messaging.MessagePublisher;
 import se.iths.corkdork.service.UserService;
 
 @RestController
@@ -15,9 +16,11 @@ import se.iths.corkdork.service.UserService;
 public class UserController {
 
     private final UserService userService;
+    private final MessagePublisher messagePublisher;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, MessagePublisher messagePublisher) {
         this.userService = userService;
+        this.messagePublisher = messagePublisher;
     }
 
     @PostMapping("signup")
@@ -25,8 +28,8 @@ public class UserController {
 
         if (errors.hasErrors())
             throw new BadRequestException("Invalid input", errors);
-
         User createdUser = userService.createUser(user);
+        messagePublisher.sendMessage(createdUser.getUsername());
 
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }

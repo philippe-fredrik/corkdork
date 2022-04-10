@@ -20,7 +20,6 @@ public class WineController {
         this.wineService = wineService;
     }
 
-
     @PostMapping("")
     public ResponseEntity<Wine> createWine(@Validated @RequestBody Wine wine, BindingResult errors) {
 

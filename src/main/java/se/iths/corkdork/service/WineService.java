@@ -73,4 +73,12 @@ public class WineService {
                 new TypeToken<Iterable<Wine>>() {
                 }.getType());
     }
+
+    public Wine findWineByName(String name) {
+
+        Optional<WineEntity> foundWine = wineRepository.findByName(name);
+
+        return modelMapper.map(foundWine.get(), Wine.class);
+
+    }
 }
